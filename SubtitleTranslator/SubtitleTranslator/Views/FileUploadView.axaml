@@ -16,12 +16,12 @@
                     HorizontalAlignment="Center" VerticalAlignment="Center" 
                     Spacing="50">
             <StackPanel Orientation="Vertical">
-                <Label Content="字幕文件翻译"></Label>
-                <Label Content="请拖入或选择字幕文件"></Label>
+                <TextBlock Text="字幕文件翻译"></TextBlock>
+                <TextBlock Text="请拖入或选择字幕文件"></TextBlock>
             </StackPanel>
             <StackPanel Orientation="Vertical">
-                <Label Content="支持字幕格式"></Label>
-                <Label Content="srt"></Label>
+                <TextBlock Text="支持字幕格式"></TextBlock>
+                <TextBlock Text="srt"></TextBlock>
             </StackPanel>
         </StackPanel>
     </Button>

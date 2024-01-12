@@ -12,5 +12,6 @@
     </Design.DataContext>
     <Grid RowDefinitions="Auto, Auto, Auto">
         <views:FileUploadView Grid.Row="0"/>
+        <views:FileListView Grid.Row="1"/>
     </Grid>
 </UserControl>

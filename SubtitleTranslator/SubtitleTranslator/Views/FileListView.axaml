@@ -1,0 +1,30 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="clr-namespace:SubtitleTranslator.ViewModels"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="820" d:DesignHeight="250"
+             x:Class="SubtitleTranslator.Views.FileListView"
+             x:DataType="vm:FileListViewModel">
+    <Design.DataContext>
+        <vm:FileListViewModel />
+    </Design.DataContext>
+    <StackPanel>
+        <Grid ColumnDefinitions="*,2*,*">
+            <TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="状态"></TextBlock>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Text="文件名"></TextBlock>
+            <TextBlock Grid.Column="2" HorizontalAlignment="Right" Text="说明"></TextBlock>
+        </Grid>
+        <ListBox x:Name="ListBox">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="*,2*,*">
+                        <TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="1"></TextBlock>
+                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Text="2"></TextBlock>
+                        <TextBlock Grid.Column="2" HorizontalAlignment="Right" Text="3"></TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </StackPanel>
+</UserControl>
