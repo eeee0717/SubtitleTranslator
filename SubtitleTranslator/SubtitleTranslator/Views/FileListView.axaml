@@ -9,13 +9,16 @@
     <Design.DataContext>
         <vm:FileListViewModel />
     </Design.DataContext>
+    <UserControl.DataContext>
+        <vm:FileListViewModel />
+    </UserControl.DataContext>
     <StackPanel>
         <Grid ColumnDefinitions="*,2*,*">
             <TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="状态"></TextBlock>
             <TextBlock Grid.Column="1" HorizontalAlignment="Left" Text="文件名"></TextBlock>
             <TextBlock Grid.Column="2" HorizontalAlignment="Right" Text="说明"></TextBlock>
         </Grid>
-        <ListBox x:Name="ListBox">
+        <ListBox>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid ColumnDefinitions="*,2*,*">
@@ -26,5 +29,6 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <Button Width="50" Height="50" Command="{Binding ButtonClickedCommand}"></Button>
     </StackPanel>
 </UserControl>

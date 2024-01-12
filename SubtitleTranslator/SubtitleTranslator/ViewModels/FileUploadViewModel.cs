@@ -16,8 +16,7 @@ namespace SubtitleTranslator.ViewModels;
 
 public partial class FileUploadViewModel : ViewModelBase
 {
-  [ObservableProperty]
-  public ObservableCollection<ToBeTranslatedItem> _toBeTranslatedItems = null!;
+  public readonly ObservableCollection<ToBeTranslatedItem> ToBeTranslatedItems = new();
   [RelayCommand]
   private async Task OpenFile(CancellationToken token)
   {

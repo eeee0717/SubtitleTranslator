@@ -8,6 +8,5 @@ public partial class FileUploadView : UserControl
   public FileUploadView()
   {
     InitializeComponent();
-    this.DataContext = new FileUploadViewModel();
   }
 }

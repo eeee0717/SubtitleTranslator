@@ -9,6 +9,9 @@
     <Design.DataContext>
         <vm:FileUploadViewModel />
     </Design.DataContext>
+    <UserControl.DataContext>
+        <vm:FileUploadViewModel />
+    </UserControl.DataContext>
     <Button Height="200" Width="700"
             HorizontalAlignment="Center" VerticalAlignment="Center" 
             Command="{Binding OpenFileCommand}">
