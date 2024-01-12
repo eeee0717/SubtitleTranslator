@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -10,22 +9,22 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using SubtitleTranslator.Models;
 
 namespace SubtitleTranslator.ViewModels;
 
-public partial class FileUploadViewModel : ViewModelBase
+public partial class FileUploadViewModel : ObservableRecipient
 {
-  public readonly ObservableCollection<ToBeTranslatedItem> ToBeTranslatedItems = new();
   [RelayCommand]
   private async Task OpenFile(CancellationToken token)
   {
-    ErrorMessages?.Clear();
     try
     {
       var files = await DoOpenFilePickerAsync();
       var storageFiles = files as IStorageFile[] ?? files.ToArray();
-      if(!storageFiles.Any())
+      if (!storageFiles.Any())
         return;
       // 读取多个文件
       foreach (var file in storageFiles)
@@ -33,15 +32,11 @@ public partial class FileUploadViewModel : ViewModelBase
         await using var readStream = await file!.OpenReadAsync();
         using var reader = new StreamReader(readStream);
         var fileText = await reader.ReadToEndAsync(token);
-        var toBeTranslatedItem = new ToBeTranslatedItem
-        {
-          State = "待翻译",
-          FileName = file.Name,
-          Description = fileText.Length.ToString()
-        };
-        this.ToBeTranslatedItems.Add(toBeTranslatedItem);
+        var toBeTranslatedItem = new ToBeTranslatedItem("待翻译", file.Name, fileText.Length.ToString());
+        WeakReferenceMessenger.Default.Send(
+          new ValueChangedMessage<ToBeTranslatedItem>(toBeTranslatedItem)
+        );
       }
-
     }
     catch (Exception e)
     {
@@ -49,6 +44,7 @@ public partial class FileUploadViewModel : ViewModelBase
       throw;
     }
   }
+
   private async Task<IEnumerable<IStorageFile?>> DoOpenFilePickerAsync()
   {
     if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop ||
@@ -58,7 +54,7 @@ public partial class FileUploadViewModel : ViewModelBase
     var files = await provider.OpenFilePickerAsync(new FilePickerOpenOptions()
     {
       Title = "选择字幕文件",
-      FileTypeFilter = new[] {SubtitleFileAll},
+      FileTypeFilter = new[] { SubtitleFileAll },
       AllowMultiple = true
     });
     return files;
@@ -66,6 +62,6 @@ public partial class FileUploadViewModel : ViewModelBase
 
   private static FilePickerFileType SubtitleFileAll { get; } = new("All Subtitle Files")
   {
-    Patterns = new[] { "*.srt","*.ass" },
+    Patterns = new[] { "*.srt", "*.ass" },
   };
 }

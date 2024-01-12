@@ -7,10 +7,10 @@
              x:Class="SubtitleTranslator.Views.FileUploadView"
              x:DataType="vm:FileUploadViewModel">
     <Design.DataContext>
-        <vm:FileUploadViewModel />
+        <vm:FileUploadViewModel/>
     </Design.DataContext>
     <UserControl.DataContext>
-        <vm:FileUploadViewModel />
+        <vm:FileUploadViewModel  IsActive="True"/>
     </UserControl.DataContext>
     <Button Height="200" Width="700"
             HorizontalAlignment="Center" VerticalAlignment="Center" 

@@ -10,7 +10,7 @@
         <vm:FileListViewModel />
     </Design.DataContext>
     <UserControl.DataContext>
-        <vm:FileListViewModel />
+        <vm:FileListViewModel  IsActive="True"/>
     </UserControl.DataContext>
     <StackPanel>
         <Grid ColumnDefinitions="*,2*,*">
@@ -18,17 +18,19 @@
             <TextBlock Grid.Column="1" HorizontalAlignment="Left" Text="文件名"></TextBlock>
             <TextBlock Grid.Column="2" HorizontalAlignment="Right" Text="说明"></TextBlock>
         </Grid>
-        <ListBox>
+        <ListBox
+            d:ItemsSource="{x:Null}"
+            ItemsSource="{Binding ToBeTranslatedItems}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid ColumnDefinitions="*,2*,*">
-                        <TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="1"></TextBlock>
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Text="2"></TextBlock>
-                        <TextBlock Grid.Column="2" HorizontalAlignment="Right" Text="3"></TextBlock>
+                        <TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="{Binding State}"></TextBlock>
+                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Text="{Binding FileName}"></TextBlock>
+                        <TextBlock Grid.Column="2" HorizontalAlignment="Right" Text="{Binding Description}"></TextBlock>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Width="50" Height="50" Command="{Binding ButtonClickedCommand}"></Button>
+        <!-- <Button Width="50" Height="50" Command="{Binding ButtonClickedCommand}"></Button> -->
     </StackPanel>
 </UserControl>

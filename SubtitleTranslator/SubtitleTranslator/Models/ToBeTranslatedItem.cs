@@ -1,8 +1,3 @@
 namespace SubtitleTranslator.Models;
 
-public class ToBeTranslatedItem
-{
-  public required string State;
-  public required string FileName;
-  public required string Description;
-}
+public record ToBeTranslatedItem(string State, string FileName, string Description);
