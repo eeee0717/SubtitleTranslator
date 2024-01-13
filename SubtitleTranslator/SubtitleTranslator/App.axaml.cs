@@ -17,29 +17,16 @@ public class App : Application
   {
     AvaloniaXamlLoader.Load(this);
   }
-  public new static App Current => (App)Application.Current;
-
-  public IServiceProvider Services { get; set; } = ConfigureServices();
-
   public override void OnFrameworkInitializationCompleted()
   {
     if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
     {
-      var vm = Services.GetService<MainViewModel>();
       desktop.MainWindow = new MainWindow
       {
-        DataContext = vm
+        DataContext = new MainViewModel()
       };
     }
     base.OnFrameworkInitializationCompleted();
   }
-
-  private static IServiceProvider ConfigureServices()
-  {
-    var services = new ServiceCollection();
-    services.AddSingleton<MainViewModel>();
-    services.AddSingleton<FileUploadViewModel>();
-    services.AddSingleton<FileListViewModel>();
-    return services.BuildServiceProvider();
-  }
+  
 }

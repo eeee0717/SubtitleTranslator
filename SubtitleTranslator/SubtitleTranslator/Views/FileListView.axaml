@@ -10,7 +10,7 @@
         <vm:FileListViewModel />
     </Design.DataContext>
     <UserControl.DataContext>
-        <vm:FileListViewModel  IsActive="True"/>
+        <vm:FileListViewModel IsActive="True" />
     </UserControl.DataContext>
     <StackPanel>
         <Grid ColumnDefinitions="*,2*,*">
