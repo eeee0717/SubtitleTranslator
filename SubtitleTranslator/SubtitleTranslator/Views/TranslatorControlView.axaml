@@ -1,0 +1,32 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:SubtitleTranslator.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="100"
+             x:Class="SubtitleTranslator.Views.TranslatorControlView"
+             x:DataType="vm:TranslatorControlViewModel">
+    <Grid RowDefinitions="*,*" ColumnDefinitions="*,*,*,2*">
+        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="翻译源"></TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Text="当前语言"></TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Text="目标语言"></TextBlock>
+        <ComboBox Grid.Row="1" Grid.Column="0"
+                  SelectedIndex="0"
+                  VerticalAlignment="Center" HorizontalAlignment="Center">
+            <ComboBoxItem Content="腾讯云"/>
+        </ComboBox>
+        <ComboBox Grid.Row="1" Grid.Column="1" 
+                  SelectedIndex="0"
+                  VerticalAlignment="Center" HorizontalAlignment="Center">
+            <ComboBoxItem Content="英文"/>
+        </ComboBox>
+        <ComboBox Grid.Row="1" Grid.Column="2" 
+                  SelectedIndex="0"
+                  VerticalAlignment="Center" HorizontalAlignment="Center">
+            <ComboBoxItem Content="中文"/>
+        </ComboBox>
+        <Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="3" Height="50" Width="150" Content="开始翻译"
+                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                VerticalAlignment="Center" HorizontalAlignment="Center" />
+    </Grid>
+</UserControl>
