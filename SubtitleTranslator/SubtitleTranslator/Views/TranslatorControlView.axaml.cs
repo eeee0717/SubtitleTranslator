@@ -10,4 +10,5 @@ public partial class TranslatorControlView : UserControl
   {
     InitializeComponent();
   }
+  
 }
