@@ -9,11 +9,12 @@ using SubtitleTranslator.Models;
 
 namespace SubtitleTranslator.ViewModels;
 
-public partial class TranslatorControlViewModel: ObservableObject
+public partial class TranslatorControlViewModel : ObservableObject
 {
-  [ObservableProperty] private ObservableCollection<string> _translationSourceList;
-  [ObservableProperty] private string _selectedTranslationSource;
-  private Dictionary<string, ITranslator> _translatorMap;
+  [ObservableProperty] private ObservableCollection<string> _translationSourceList = null!;
+  [ObservableProperty] private string _selectedTranslationSource = "腾讯云";
+  private Dictionary<string, ITranslator>? _translatorMap;
+
   public TranslatorControlViewModel()
   {
     this.InitializeTranslation();
@@ -31,7 +32,7 @@ public partial class TranslatorControlViewModel: ObservableObject
   [RelayCommand]
   private async Task TranslateClicked()
   {
-    ITranslator currentTranslator = this._translatorMap[SelectedTranslationSource];
+    ITranslator currentTranslator = this._translatorMap![SelectedTranslationSource];
     string s = await currentTranslator.Translate("Hello World", "en", "zh");
     Console.WriteLine(s);
   }

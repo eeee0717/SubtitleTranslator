@@ -18,6 +18,7 @@
         <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Text="目标语言"></TextBlock>
         <ComboBox Grid.Row="1" Grid.Column="0"
                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                  SelectedIndex="0"
                   SelectedItem="{Binding SelectedTranslationSource}"
                   ItemsSource="{Binding TranslationSourceList}">
         </ComboBox>
