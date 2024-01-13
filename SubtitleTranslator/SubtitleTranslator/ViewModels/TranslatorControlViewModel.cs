@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SubtitleTranslator.Models;
@@ -28,10 +29,10 @@ public partial class TranslatorControlViewModel: ObservableObject
   }
 
   [RelayCommand]
-  private void TranslateClicked()
+  private async Task TranslateClicked()
   {
     ITranslator currentTranslator = this._translatorMap[SelectedTranslationSource];
-    string s = currentTranslator.Translate("Hello World", "en", "zh");
+    string s = await currentTranslator.Translate("Hello World", "en", "zh");
     Console.WriteLine(s);
   }
 }

@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
+
 namespace SubtitleTranslator.Models;
 
 public interface ITranslator
 {
-  string Translate(string text, string sourceLanguage, string targetLanguage);
+  Task<string> Translate(string text, string sourceLanguage, string targetLanguage);
 }
