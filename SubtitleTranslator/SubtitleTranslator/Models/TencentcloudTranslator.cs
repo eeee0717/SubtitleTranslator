@@ -1,11 +1,15 @@
 using System;
+using System.Globalization;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using SubtitleTranslator.Storages;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace SubtitleTranslator.Models;
 
@@ -21,9 +25,20 @@ public class TencentcloudTranslator : ITranslator
 
   public async Task<string> Translate(string text, string sourceLanguage, string targetLanguage)
   {
+    // text = @"1\r\n00:00:00,810 --> 00:00:02,520\r\nHi and thank you for stopping by.\r\n";
+    var testBody = new TestBody
+    {
+      SourceText = text
+    };
+    string jsonString = JsonConvert.SerializeObject(testBody);
+
+    // _parameter = _parameter with
+    // {
+    //   Body = $"{{\"SourceText\":\"{text}\",\"Source\":\"en\",\"Target\":\"zh\",\"ProjectId\":1}}"
+    // };
     _parameter = _parameter with
     {
-      Body = $"{{\"SourceText\":\"{text}\",\"Source\":\"en\",\"Target\":\"zh\",\"ProjectId\":1}}"
+      Body = jsonString
     };
     var resp = await DoRequest(_parameter.SecretId, _parameter.SecretKey,
       _parameter.Service, _parameter.Version, _parameter.Action,

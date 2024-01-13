@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
@@ -31,7 +32,7 @@ public partial class FileUploadViewModel : ObservableRecipient
       foreach (var file in storageFiles)
       {
         await using var readStream = await file!.OpenReadAsync();
-        using var reader = new StreamReader(readStream);
+        using var reader = new StreamReader(readStream,Encoding.UTF8);
         var fileContent = await reader.ReadToEndAsync(token);
         var toBeTranslatedItem = new ToBeTranslatedItem("待翻译", file.Name, fileContent.Length.ToString(), fileContent);
         WeakReferenceMessenger.Default.Send(
