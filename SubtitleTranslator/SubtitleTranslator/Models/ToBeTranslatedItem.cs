@@ -2,4 +2,4 @@ using System;
 
 namespace SubtitleTranslator.Models;
 
-public record ToBeTranslatedItem(string State, string FileName, string Description, Uri Path);
+public record ToBeTranslatedItem(string State, string FileName, string Description, string FileContent);

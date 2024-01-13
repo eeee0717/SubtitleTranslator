@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -12,12 +13,12 @@ using SubtitleTranslator.Models;
 namespace SubtitleTranslator.ViewModels;
 
 public partial class TranslatorControlViewModel : ObservableRecipient,
-  IRecipient<ValueChangedMessage<Uri>>
+  IRecipient<ValueChangedMessage<string>>
 {
   [ObservableProperty] private ObservableCollection<string> _translationSourceList = null!;
   [ObservableProperty] private string _selectedTranslationSource = "腾讯云";
   private Dictionary<string, ITranslator>? _translatorMap;
-  public ObservableCollection<Uri> ToBeTranslatedPaths { get; } = new();
+  private ObservableCollection<string> ToBeTranslatedContents { get; } = new();
 
 
   public TranslatorControlViewModel()
@@ -38,12 +39,17 @@ public partial class TranslatorControlViewModel : ObservableRecipient,
   private async Task TranslateClicked()
   {
     ITranslator currentTranslator = this._translatorMap![SelectedTranslationSource];
-    string s = await currentTranslator.Translate("Hello World", "en", "zh");
-    Console.WriteLine(s);
+    foreach (var toBeTranslatedContent in ToBeTranslatedContents)
+    {
+      string result = await currentTranslator.Translate(toBeTranslatedContent, "en", "zh");
+      Console.WriteLine(result);
+    }
+    
   }
   
-  public void Receive(ValueChangedMessage<Uri> message)
+  
+  public void Receive(ValueChangedMessage<string> message)
   {
-    ToBeTranslatedPaths.Add(message.Value);
+    ToBeTranslatedContents.Add(message.Value);
   }
 }

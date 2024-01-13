@@ -21,6 +21,10 @@ public class TencentcloudTranslator : ITranslator
 
   public async Task<string> Translate(string text, string sourceLanguage, string targetLanguage)
   {
+    _parameter = _parameter with
+    {
+      Body = $"{{\"SourceText\":\"{text}\",\"Source\":\"en\",\"Target\":\"zh\",\"ProjectId\":1}}"
+    };
     var resp = await DoRequest(_parameter.SecretId, _parameter.SecretKey,
       _parameter.Service, _parameter.Version, _parameter.Action,
       _parameter.Body, _parameter.Region, _parameter.Token);
@@ -38,7 +42,7 @@ public class TencentcloudTranslator : ITranslator
       Service: "tmt",
       Version: "2018-03-21",
       Action: "TextTranslate",
-      Body: "{\"SourceText\":\"hello\",\"Source\":\"en\",\"Target\":\"zh\",\"ProjectId\":1}",
+      Body: "",
       Region: "ap-beijing"
     );
   }
