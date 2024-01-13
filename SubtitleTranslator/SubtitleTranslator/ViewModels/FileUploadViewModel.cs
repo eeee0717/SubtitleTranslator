@@ -32,7 +32,7 @@ public partial class FileUploadViewModel : ObservableRecipient
         await using var readStream = await file!.OpenReadAsync();
         using var reader = new StreamReader(readStream);
         var fileText = await reader.ReadToEndAsync(token);
-        var toBeTranslatedItem = new ToBeTranslatedItem("待翻译", file.Name, fileText.Length.ToString());
+        var toBeTranslatedItem = new ToBeTranslatedItem("待翻译", file.Name, fileText.Length.ToString(), file.Path);
         WeakReferenceMessenger.Default.Send(
           new ValueChangedMessage<ToBeTranslatedItem>(toBeTranslatedItem)
         );

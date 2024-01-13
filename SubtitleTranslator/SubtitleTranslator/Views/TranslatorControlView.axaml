@@ -10,7 +10,7 @@
         <vm:TranslatorControlViewModel />
     </Design.DataContext>
     <UserControl.DataContext>
-        <vm:TranslatorControlViewModel />
+        <vm:TranslatorControlViewModel IsActive="True"/>
     </UserControl.DataContext>
     <Grid RowDefinitions="*,*" ColumnDefinitions="*,*,*,2*">
         <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="翻译源"></TextBlock>
