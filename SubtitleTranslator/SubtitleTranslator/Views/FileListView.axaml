@@ -12,25 +12,28 @@
     <UserControl.DataContext>
         <vm:FileListViewModel IsActive="True" />
     </UserControl.DataContext>
-    <StackPanel>
+    <StackPanel  Width="700">
         <Grid ColumnDefinitions="*,2*,*">
             <TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="状态"></TextBlock>
             <TextBlock Grid.Column="1" HorizontalAlignment="Left" Text="文件名"></TextBlock>
             <TextBlock Grid.Column="2" HorizontalAlignment="Right" Text="说明"></TextBlock>
         </Grid>
-        <ListBox
-            d:ItemsSource="{x:Null}"
-            ItemsSource="{Binding ToBeTranslatedItems}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid ColumnDefinitions="*,2*,*">
-                        <TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="{Binding State}"></TextBlock>
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Text="{Binding FileName}"></TextBlock>
-                        <TextBlock Grid.Column="2" HorizontalAlignment="Right" Text="{Binding Description}"></TextBlock>
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <ScrollViewer VerticalScrollBarVisibility="Visible">
+            <ListBox Height="350" 
+                d:ItemsSource="{x:Null}"
+                ItemsSource="{Binding ToBeTranslatedItems}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="*,2*,*">
+                            <TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="{Binding State}"></TextBlock>
+                            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Text="{Binding FileName}"></TextBlock>
+                            <TextBlock Grid.Column="2" HorizontalAlignment="Right" Text="{Binding Description}"></TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </ScrollViewer>
+        
         <!-- <Button Width="50" Height="50" Command="{Binding ButtonClickedCommand}"></Button> -->
     </StackPanel>
 </UserControl>
