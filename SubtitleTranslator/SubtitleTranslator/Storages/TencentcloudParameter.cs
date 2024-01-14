@@ -1,6 +1,6 @@
 namespace SubtitleTranslator.Storages;
 
-public record TencencloudParameter(
+public record TencentcloudParameter(
   string SecretId,
   string SecretKey,
   string Token,
