@@ -27,7 +27,7 @@ public partial class FileListViewModel :
       if (item is ToBeTranslatedItem toBeTranslatedItem)
       {
         WeakReferenceMessenger.Default.Send(
-          new ValueChangedMessage<string>(toBeTranslatedItem.FileContent)
+          new ValueChangedMessage<string>(toBeTranslatedItem.FilePath)
         );
       }
     }

@@ -1,11 +1,9 @@
 using System;
-using System.Globalization;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SubtitleTranslator.Storages;
@@ -16,7 +14,7 @@ namespace SubtitleTranslator.Models;
 public class TencentcloudTranslator : ITranslator
 {
   private static readonly HttpClient Client = new();
-  private static TencencloudParameter _parameter = null!;
+  private static TencentcloudParameter _parameter = null!;
 
   public TencentcloudTranslator()
   {
@@ -25,20 +23,17 @@ public class TencentcloudTranslator : ITranslator
 
   public async Task<string> Translate(string text, string sourceLanguage, string targetLanguage)
   {
-    // text = @"1\r\n00:00:00,810 --> 00:00:02,520\r\nHi and thank you for stopping by.\r\n";
-    var testBody = new TestBody
+    var tencentcloudRequestBody = new TencentcloudRequestBody
     {
-      SourceText = text
+      SourceText = text,
+      Source = sourceLanguage,
+      Target = targetLanguage
     };
-    string jsonString = JsonConvert.SerializeObject(testBody);
-
-    // _parameter = _parameter with
-    // {
-    //   Body = $"{{\"SourceText\":\"{text}\",\"Source\":\"en\",\"Target\":\"zh\",\"ProjectId\":1}}"
-    // };
+    string tencentcloudRequestBodyString = JsonConvert.SerializeObject(tencentcloudRequestBody);
+    
     _parameter = _parameter with
     {
-      Body = jsonString
+      Body = tencentcloudRequestBodyString
     };
     var resp = await DoRequest(_parameter.SecretId, _parameter.SecretKey,
       _parameter.Service, _parameter.Version, _parameter.Action,
@@ -49,7 +44,7 @@ public class TencentcloudTranslator : ITranslator
 
   private static void InitParameter()
   {
-    _parameter = new TencencloudParameter
+    _parameter = new TencentcloudParameter
     (
       SecretId: "AKIDMdmJo9JMI4e7VuSvLbdR0LRJRL1UjkX6",
       SecretKey: "mU2Riv6Sg1PfirtkbHxTnu7aKCB4rUu7",

@@ -25,16 +25,17 @@ public partial class FileUploadViewModel : ObservableRecipient
     {
       var files = await DoOpenFilePickerAsync();
       var storageFiles = files as IStorageFile[] ?? files.ToArray();
-      
       if (!storageFiles.Any())
         return;
-      // 读取多个文件
+      
       foreach (var file in storageFiles)
       {
-        await using var readStream = await file!.OpenReadAsync();
-        using var reader = new StreamReader(readStream,Encoding.UTF8);
-        var fileContent = await reader.ReadToEndAsync(token);
-        var toBeTranslatedItem = new ToBeTranslatedItem("待翻译", file.Name, fileContent.Length.ToString(), fileContent);
+        var filePath = file!.TryGetLocalPath();
+        var fileSize = new FileInfo(filePath!).Length;
+        // await using var readStream = await file!.OpenReadAsync();
+        // using var reader = new StreamReader(readStream, Encoding.UTF8);
+        // var fileContent = await reader.ReadToEndAsync(token);
+        var toBeTranslatedItem = new ToBeTranslatedItem("待翻译", file!.Name, fileSize.ToString(), filePath!);
         WeakReferenceMessenger.Default.Send(
           new ValueChangedMessage<ToBeTranslatedItem>(toBeTranslatedItem)
         );
