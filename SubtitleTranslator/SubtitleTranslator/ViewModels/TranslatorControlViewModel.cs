@@ -53,24 +53,31 @@ public partial class TranslatorControlViewModel : ObservableRecipient,
   {
     var numberPattern = new Regex(@"^\d+$");
     var timelinePattern = new Regex(@"^\d{2}:\d{2}:\d{2},\d{3} --> \d{2}:\d{2}:\d{2},\d{3}$");
+    var translatedResult = new List<string>();
+    var toBeTranslated = "";
     using StreamReader streamReader = new StreamReader(toBeTranslatedPath, Encoding.UTF8);
-    string? line;
-    string translatedResult="";
-    while ((line = await streamReader.ReadLineAsync()) != null)
+    while (await streamReader.ReadLineAsync() is { } line)
     {
-      if (numberPattern.IsMatch(line) || timelinePattern.IsMatch(line)||string.IsNullOrWhiteSpace(line))
+      if (numberPattern.IsMatch(line) || timelinePattern.IsMatch(line) || string.IsNullOrWhiteSpace(line))
       {
-        translatedResult += line + "\r\n";
+        translatedResult.Add(line);
         continue;
       }
-
-      // This line is a subtitle, translate it
-      string translatedLine =  await currentTranslator.Translate(line, "en", "zh");
-      translatedResult += translatedLine + "\r\n";
-      Console.WriteLine(translatedResult);
+      translatedResult.Add("");
+      toBeTranslated += $"{line}\n";
+    }
+    var translatedContents = await currentTranslator.Translate(toBeTranslated, "en", "zh");
+    var translatedSplitStrings = translatedContents.Split("\n");
+    for (int i = 0; i < translatedResult.Count; i++)
+    {
+      // i=2,6,10...时处理
+      if ((i - 2) % 4 == 0)
+      {
+        translatedResult[i] = translatedSplitStrings[(i - 2) / 4];
+      }
     }
 
-    return translatedResult;
+    return string.Join("\r\n", translatedResult);
   }
 
 
