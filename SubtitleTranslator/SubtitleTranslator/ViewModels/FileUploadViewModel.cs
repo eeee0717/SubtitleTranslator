@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
@@ -24,15 +25,16 @@ public partial class FileUploadViewModel : ObservableRecipient
     {
       var files = await DoOpenFilePickerAsync();
       var storageFiles = files as IStorageFile[] ?? files.ToArray();
+      
       if (!storageFiles.Any())
         return;
       // 读取多个文件
       foreach (var file in storageFiles)
       {
         await using var readStream = await file!.OpenReadAsync();
-        using var reader = new StreamReader(readStream);
-        var fileText = await reader.ReadToEndAsync(token);
-        var toBeTranslatedItem = new ToBeTranslatedItem("待翻译", file.Name, fileText.Length.ToString());
+        using var reader = new StreamReader(readStream,Encoding.UTF8);
+        var fileContent = await reader.ReadToEndAsync(token);
+        var toBeTranslatedItem = new ToBeTranslatedItem("待翻译", file.Name, fileContent.Length.ToString(), fileContent);
         WeakReferenceMessenger.Default.Send(
           new ValueChangedMessage<ToBeTranslatedItem>(toBeTranslatedItem)
         );
@@ -51,7 +53,7 @@ public partial class FileUploadViewModel : ObservableRecipient
         desktop.MainWindow?.StorageProvider is not { } provider)
       throw new NullReferenceException("Missing StorageProvider instance.");
 
-    var files = await provider.OpenFilePickerAsync(new FilePickerOpenOptions()
+    var files = await provider.OpenFilePickerAsync(new FilePickerOpenOptions
     {
       Title = "选择字幕文件",
       FileTypeFilter = new[] { SubtitleFileAll },
