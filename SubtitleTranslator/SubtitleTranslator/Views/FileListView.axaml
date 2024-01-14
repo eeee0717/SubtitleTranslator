@@ -27,7 +27,7 @@
                         <Grid ColumnDefinitions="*,2*,*">
                             <TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="{Binding State}"></TextBlock>
                             <TextBlock Grid.Column="1" HorizontalAlignment="Left" Text="{Binding FileName}"></TextBlock>
-                            <TextBlock Grid.Column="2" HorizontalAlignment="Right" Text="{Binding Description}"></TextBlock>
+                            <TextBlock Grid.Column="2" HorizontalAlignment="Right" Text="{Binding FileSize}"></TextBlock>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
