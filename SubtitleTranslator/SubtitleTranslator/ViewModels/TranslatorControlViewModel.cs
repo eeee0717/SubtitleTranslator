@@ -2,21 +2,24 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using MsBox.Avalonia;
+using MsBox.Avalonia.Enums;
 using SubtitleTranslator.Helpers;
 
 namespace SubtitleTranslator.ViewModels;
 
 public partial class TranslatorControlViewModel : ObservableRecipient,
-  IRecipient<ValueChangedMessage<string>>
+  IRecipient<ValueChangedMessage<List<string>>>
 {
   [ObservableProperty] private ObservableCollection<string> _translationSourceList = null!;
   [ObservableProperty] private string _selectedTranslationSource = "腾讯云";
   private Dictionary<string, ITranslator>? _translatorMap;
-  private ObservableCollection<string> ToBeTranslatedPaths { get; } = new();
+  private List<string> ToBeTranslatedPaths { get; set; } = new();
 
 
   public TranslatorControlViewModel()
@@ -42,7 +45,14 @@ public partial class TranslatorControlViewModel : ObservableRecipient,
       var translatedResult = await TranslateFile(currentTranslator, toBeTranslatedPath);
       var fileWriter = new FileWriter();
       await fileWriter.WriteFile(toBeTranslatedPath, translatedResult);
+      
+      WeakReferenceMessenger.Default.Send(
+        new ValueChangedMessage<string>(toBeTranslatedPath)
+      );
     }
+    var completedMessageBox = MessageBoxManager
+      .GetMessageBoxStandard("翻译结果", "翻译完成", ButtonEnum.Ok, Icon.Info);
+    await completedMessageBox.ShowAsync();
   }
 
   private static async Task<string> TranslateFile(ITranslator currentTranslator, string toBeTranslatedPath)
@@ -66,8 +76,8 @@ public partial class TranslatorControlViewModel : ObservableRecipient,
   }
 
 
-  public void Receive(ValueChangedMessage<string> message)
+  public void Receive(ValueChangedMessage<List<string>> message)
   {
-    ToBeTranslatedPaths.Add(message.Value);
+    ToBeTranslatedPaths = message.Value;
   }
 }

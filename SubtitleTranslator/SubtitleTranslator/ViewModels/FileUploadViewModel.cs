@@ -32,7 +32,7 @@ public partial class FileUploadViewModel : ObservableRecipient
       {
         var filePath = file!.TryGetLocalPath();
         var fileSize = new FileInfo(filePath!).Length;
-        var toBeTranslatedItem = new ToBeTranslatedItem("待翻译", file!.Name, fileSize.ToString(), filePath!);
+        var toBeTranslatedItem = new ToBeTranslatedItem(false, file!.Name, fileSize.ToString(), filePath!);
         WeakReferenceMessenger.Default.Send(
           new ValueChangedMessage<ToBeTranslatedItem>(toBeTranslatedItem)
         );

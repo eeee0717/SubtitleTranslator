@@ -1,5 +1,12 @@
-using System;
-
 namespace SubtitleTranslator.Models;
 
-public record ToBeTranslatedItem(string State, string FileName, string FileSize, string FilePath);
+public class ToBeTranslatedItem(bool isTranslated, string fileName, string fileSize, string filePath)
+{
+  public bool IsTranslated { get; set; } = isTranslated;
+  public string FileName { get; set; } = fileName;
+  public string FileSize { get; set; } = fileSize;
+  public string FilePath { get; set; } = filePath;
+  
+  
+  
+}
