@@ -1,26 +1,25 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
-using SubtitleTranslator.Models;
+using MsBox.Avalonia;
+using MsBox.Avalonia.Enums;
+using SubtitleTranslator.Helpers;
 
 namespace SubtitleTranslator.ViewModels;
 
 public partial class TranslatorControlViewModel : ObservableRecipient,
-  IRecipient<ValueChangedMessage<string>>
+  IRecipient<ValueChangedMessage<List<string>>>
 {
   [ObservableProperty] private ObservableCollection<string> _translationSourceList = null!;
   [ObservableProperty] private string _selectedTranslationSource = "腾讯云";
   private Dictionary<string, ITranslator>? _translatorMap;
-  private ObservableCollection<string> ToBeTranslatedPaths { get; } = new();
+  private List<string> ToBeTranslatedPaths { get; set; } = new();
 
 
   public TranslatorControlViewModel()
@@ -46,43 +45,39 @@ public partial class TranslatorControlViewModel : ObservableRecipient,
       var translatedResult = await TranslateFile(currentTranslator, toBeTranslatedPath);
       var fileWriter = new FileWriter();
       await fileWriter.WriteFile(toBeTranslatedPath, translatedResult);
+      
+      WeakReferenceMessenger.Default.Send(
+        new ValueChangedMessage<string>(toBeTranslatedPath)
+      );
     }
+    var completedMessageBox = MessageBoxManager
+      .GetMessageBoxStandard("翻译结果", "翻译完成", ButtonEnum.Ok, Icon.Info);
+    await completedMessageBox.ShowAsync();
   }
 
-  private async Task<string> TranslateFile(ITranslator currentTranslator, string toBeTranslatedPath)
+  private static async Task<string> TranslateFile(ITranslator currentTranslator, string toBeTranslatedPath)
   {
-    var numberPattern = new Regex(@"^\d+$");
-    var timelinePattern = new Regex(@"^\d{2}:\d{2}:\d{2},\d{3} --> \d{2}:\d{2}:\d{2},\d{3}$");
-    var translatedResult = new List<string>();
-    var toBeTranslated = "";
-    using StreamReader streamReader = new StreamReader(toBeTranslatedPath, Encoding.UTF8);
-    while (await streamReader.ReadLineAsync() is { } line)
+    var translatedContents = "";
+    var srtContentSplitHelper = new SrtContentSplitHelper();
+    var (originalContentList, toBeTranslatedList) =
+      await srtContentSplitHelper.SplitContent(toBeTranslatedPath);
+    foreach (var toBeTranslatedContent in toBeTranslatedList)
     {
-      if (numberPattern.IsMatch(line) || timelinePattern.IsMatch(line) || string.IsNullOrWhiteSpace(line))
-      {
-        translatedResult.Add(line);
-        continue;
-      }
-      translatedResult.Add("");
-      toBeTranslated += $"{line}\n";
-    }
-    var translatedContents = await currentTranslator.Translate(toBeTranslated, "en", "zh");
-    var translatedSplitStrings = translatedContents.Split("\n");
-    for (int i = 0; i < translatedResult.Count; i++)
-    {
-      // i=2,6,10...时处理
-      if ((i - 2) % 4 == 0)
-      {
-        translatedResult[i] = translatedSplitStrings[(i - 2) / 4];
-      }
+      var apiCount = 0;
+      var translatedContent =
+        await currentTranslator.Translate(toBeTranslatedContent, "en", "zh");
+      apiCount++;
+      if(apiCount == 4)
+        await Task.Delay(1000);
+      translatedContents += translatedContent;
     }
 
-    return string.Join("\r\n", translatedResult);
+    return srtContentSplitHelper.CombineContent(originalContentList, translatedContents);
   }
 
 
-  public void Receive(ValueChangedMessage<string> message)
+  public void Receive(ValueChangedMessage<List<string>> message)
   {
-    ToBeTranslatedPaths.Add(message.Value);
+    ToBeTranslatedPaths = message.Value;
   }
 }

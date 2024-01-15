@@ -6,10 +6,11 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using SubtitleTranslator.Models;
 using SubtitleTranslator.Storages;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
-namespace SubtitleTranslator.Models;
+namespace SubtitleTranslator.Helpers;
 
 public class TencentcloudTranslator : ITranslator
 {
@@ -29,7 +30,7 @@ public class TencentcloudTranslator : ITranslator
       Source = sourceLanguage,
       Target = targetLanguage
     };
-    string tencentcloudRequestBodyString = JsonConvert.SerializeObject(tencentcloudRequestBody);
+    var tencentcloudRequestBodyString = JsonConvert.SerializeObject(tencentcloudRequestBody);
     
     _parameter = _parameter with
     {
