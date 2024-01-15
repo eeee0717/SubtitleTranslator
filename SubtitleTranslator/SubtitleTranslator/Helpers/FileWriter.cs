@@ -2,7 +2,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SubtitleTranslator.Models;
+namespace SubtitleTranslator.Helpers;
 
 public class FileWriter: IFileWriter
 {

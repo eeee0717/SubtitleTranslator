@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace SubtitleTranslator.Models;
+namespace SubtitleTranslator.Helpers;
 
 public interface ITranslator
 {
