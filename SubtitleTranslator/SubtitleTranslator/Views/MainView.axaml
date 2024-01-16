@@ -14,9 +14,58 @@
     <UserControl.DataContext>
         <vm:MainViewModel />
     </UserControl.DataContext>
-    <Grid RowDefinitions="Auto, Auto, Auto">
-        <views:FileUploadView Grid.Row="0" Margin="10"/>
-        <views:TranslatorControlView Grid.Row="1" Margin="10"/>
-        <views:FileListView Grid.Row="2" Margin="10"/>
-    </Grid>
+    <SplitView
+        x:Name="SidebarMenu"
+        IsPaneOpen="{Binding IsPaneOpen}"
+        DisplayMode="CompactInline"
+        CompactPaneLength="46"
+        OpenPaneLength="200">
+        <SplitView.Pane>
+            <Grid RowDefinitions="*, Auto">
+                <StackPanel Grid.Row="0" Orientation="Vertical"
+                            HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                    <Button Height="32" Width="32"
+                            CornerRadius="5"
+                            Margin="7,10"
+                            HorizontalAlignment="Left"
+                            Command="{Binding TogglePaneCommand}">
+                        <PathIcon Height="11" Data="{StaticResource LineHorizontal3Regular}"></PathIcon>
+                    </Button>
+                    <ListBox Margin="7 0 7 0" Padding="0" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedListItem}">
+                        <ListBox.Styles>
+                            <Style Selector="ListBoxItem">
+                                <Setter Property="Padding" Value="7 8"></Setter>
+                                <Setter Property="CornerRadius" Value="5"></Setter>
+                            </Style>
+                        </ListBox.Styles>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type vm:ListItemTemplate}">
+                                <StackPanel Spacing="17" Orientation="Horizontal">
+                                    <PathIcon  Data="{Binding ListItemIcon}" Width="18" />
+                                    <TextBlock Text="{Binding Label}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Orientation="Vertical"
+                            HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal">
+                        <Button
+                            Height="32" Width="32"
+                            Margin="7,10"
+                            CornerRadius="5"
+                            HorizontalAlignment="Left">
+                            <PathIcon Height="16" Data="{StaticResource SettingsRegular}"></PathIcon>
+                        </Button>
+                        <Label Height="32" Content="设置" VerticalContentAlignment="Center"
+                               IsVisible="{Binding ElementName=SidebarMenu,Path=IsPaneOpen}" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </SplitView.Pane>
+        <SplitView.Content>
+            <TransitioningContentControl Content="{Binding CurrentPage}"></TransitioningContentControl>
+        </SplitView.Content>
+    </SplitView>
 </UserControl>
