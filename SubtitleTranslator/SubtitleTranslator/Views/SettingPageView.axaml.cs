@@ -4,7 +4,7 @@ using Avalonia.Markup.Xaml;
 
 namespace SubtitleTranslator.Views;
 
-public partial class SettingPageView : UserControl
+public partial class SettingPageView : Window
 {
   public SettingPageView()
   {

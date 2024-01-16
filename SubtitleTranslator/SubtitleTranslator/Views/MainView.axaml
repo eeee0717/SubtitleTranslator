@@ -30,7 +30,10 @@
                             Command="{Binding TogglePaneCommand}">
                         <PathIcon Height="11" Data="{StaticResource LineHorizontal3Regular}"></PathIcon>
                     </Button>
-                    <ListBox Margin="7 0 7 0" Padding="0" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedListItem}">
+                    <ListBox Margin="7 0 7 0" Padding="0" 
+                             ItemsSource="{Binding SidebarItems}" 
+                             SelectedItem="{Binding SelectedSidebarListItem}"
+                             >
                         <ListBox.Styles>
                             <Style Selector="ListBoxItem">
                                 <Setter Property="Padding" Value="7 8"></Setter>
@@ -38,7 +41,7 @@
                             </Style>
                         </ListBox.Styles>
                         <ListBox.ItemTemplate>
-                            <DataTemplate DataType="{x:Type vm:ListItemTemplate}">
+                            <DataTemplate DataType="{x:Type vm:SidebarListItemTemplate}">
                                 <StackPanel Spacing="17" Orientation="Horizontal">
                                     <PathIcon  Data="{Binding ListItemIcon}" Width="18" />
                                     <TextBlock Text="{Binding Label}"/>

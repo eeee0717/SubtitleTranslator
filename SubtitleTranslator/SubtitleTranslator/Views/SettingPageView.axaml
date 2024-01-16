@@ -1,13 +1,44 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:SubtitleTranslator.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="SubtitleTranslator.Views.SettingPageView"
-             x:DataType="vm:SettingPageViewModel">
-    <UserControl.DataContext>
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:SubtitleTranslator.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
+        Width="600" Height="400"
+        Title="设置"
+        WindowStartupLocation="CenterScreen"
+        x:Class="SubtitleTranslator.Views.SettingPageView"
+        x:DataType="vm:SettingPageViewModel">
+    <Window.DataContext>
         <vm:SettingPageViewModel></vm:SettingPageViewModel>
-    </UserControl.DataContext>
-    <TextBlock> hello</TextBlock>
-</UserControl>
+    </Window.DataContext>
+    <SplitView
+        x:Name="SidebarMenu"
+        IsPaneOpen="True"
+        DisplayMode="CompactInline"
+        OpenPaneLength="200">
+        <SplitView.Pane>
+            <StackPanel Orientation="Vertical">
+                <ListBox Margin="7 0 7 0" Padding="0" ItemsSource="{Binding Providers}"
+                         SelectedItem="{Binding SelectedListProviderItem}">
+                    <ListBox.Styles>
+                        <Style Selector="ListBoxItem">
+                            <Setter Property="Padding" Value="7 8"></Setter>
+                            <Setter Property="CornerRadius" Value="5"></Setter>
+                        </Style>
+                    </ListBox.Styles>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="{x:Type vm:ProviderListTemplate}">
+                                <TextBlock Text="{Binding Label}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <ListBox></ListBox>
+            </StackPanel>
+        </SplitView.Pane>
+        <SplitView.Content>
+            <TransitioningContentControl Content="{Binding CurrentPage}"></TransitioningContentControl>
+
+        </SplitView.Content>
+    </SplitView>
+</Window>
