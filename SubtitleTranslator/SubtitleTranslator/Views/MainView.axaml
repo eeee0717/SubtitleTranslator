@@ -3,7 +3,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:SubtitleTranslator.ViewModels"
-             xmlns:views="clr-namespace:SubtitleTranslator.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="650"
              Width="800" Height="650"
              x:Class="SubtitleTranslator.Views.MainView"
@@ -55,7 +54,8 @@
                             Height="32" Width="32"
                             Margin="7,10"
                             CornerRadius="5"
-                            HorizontalAlignment="Left">
+                            HorizontalAlignment="Left"
+                            Command="{Binding SettingCommand}">
                             <PathIcon Height="16" Data="{StaticResource SettingsRegular}"></PathIcon>
                         </Button>
                         <Label Height="32" Content="设置" VerticalContentAlignment="Center"

@@ -12,10 +12,9 @@ namespace SubtitleTranslator.ViewModels;
 public partial class MainViewModel : ViewModelBase
 {
   [ObservableProperty] private bool _isPaneOpen = true;
-  [ObservableProperty] 
-  private ViewModelBase _currentPage = new SubtitleFilePageViewModel();
-  [ObservableProperty]
-  private ListItemTemplate? _selectedListItem;
+  [ObservableProperty] private ViewModelBase _currentPage = new SubtitleFilePageViewModel();
+  [ObservableProperty] private ListItemTemplate? _selectedListItem;
+
   partial void OnSelectedListItemChanged(ListItemTemplate? value)
   {
     if (value is null) return;
@@ -27,14 +26,21 @@ public partial class MainViewModel : ViewModelBase
     if (instance is null) return;
     CurrentPage = (ViewModelBase)instance;
   }
-  
+
   public ObservableCollection<ListItemTemplate> Items { get; } = new()
   {
     new ListItemTemplate(typeof(SubtitleFilePageViewModel), "TranslateRegular", "字幕文件翻译"),
-   
   };
+
   [RelayCommand]
   private void TogglePane() => IsPaneOpen = !IsPaneOpen;
+
+  [RelayCommand]
+  private void Setting()
+  {
+    CurrentPage = new SettingPageViewModel();
+    SelectedListItem = null;
+  }
 }
 
 public class ListItemTemplate
@@ -46,7 +52,7 @@ public class ListItemTemplate
   {
     ModelType = type;
     Label = label;
-    
+
     Application.Current!.TryFindResource(iconKey, out var res);
     var streamGeometry = res as StreamGeometry ?? StreamGeometry.Parse(StreamGeometryNotFound);
     ListItemIcon = streamGeometry;
