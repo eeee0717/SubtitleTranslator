@@ -8,7 +8,7 @@ namespace SubtitleTranslator.ViewModels;
 
 public partial class SettingPageViewModel: ViewModelBase
 {
-  [ObservableProperty] private ViewModelBase _currentPage = new SubtitleFilePageViewModel();
+  [ObservableProperty] private ViewModelBase _currentPage = new BaseProviderViewModel();
   [ObservableProperty] private ProviderListTemplate? _selectedListProviderItem;
 
 
@@ -25,8 +25,8 @@ public partial class SettingPageViewModel: ViewModelBase
   }
   public ObservableCollection<ProviderListTemplate> Providers { get; } = new()
   {
-    new ProviderListTemplate(typeof(SubtitleFilePageViewModel), "翻译服务商"),
-    new ProviderListTemplate(typeof(SubtitleFilePageViewModel), "腾讯云"),
+    new ProviderListTemplate(typeof(BaseProviderViewModel), "翻译服务商"),
+    new ProviderListTemplate(typeof(TencentProviderViewModel), "腾讯云"),
   };
   
   

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace SubtitleTranslator.Helpers;
 
-public class FileWriter: IFileWriter
+public class SubtitleFileWriter: IFileWriter
 {
   public async Task WriteFile(string path, string content)
   {
@@ -13,4 +13,5 @@ public class FileWriter: IFileWriter
     await using StreamWriter streamWriter = new StreamWriter(toBeWriteFilePath, false, Encoding.Default);
     await streamWriter.WriteLineAsync(content);
   }
+  
 }

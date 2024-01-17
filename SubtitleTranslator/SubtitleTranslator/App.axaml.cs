@@ -45,10 +45,14 @@ public partial class App : Application
   [Singleton(typeof(MainViewModel))]
   [Singleton(typeof(SubtitleFilePageViewModel))]
   [Singleton(typeof(SettingPageViewModel))]
+  [Singleton(typeof(TencentProviderViewModel))]
+  [Singleton(typeof(BaseProviderViewModel))]
   internal static partial void ConfigureViewModels(IServiceCollection services);
 
   [Singleton(typeof(MainView))]
   [Singleton(typeof(SubtitleFilePageView))]
   [Singleton(typeof(SettingPageView))]
+  [Singleton(typeof(TencentProviderView))]
+  [Singleton(typeof(BaseProviderView))]
   internal static partial void ConfigureViews(IServiceCollection services);
 }

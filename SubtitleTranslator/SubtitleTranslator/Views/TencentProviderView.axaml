@@ -1,0 +1,48 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:SubtitleTranslator.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="400"
+             Width="400" Height="400"
+             x:Class="SubtitleTranslator.Views.TencentProviderView"
+             x:DataType="vm:TencentProviderViewModel">
+    <Design.DataContext>
+        <vm:TencentProviderViewModel />
+    </Design.DataContext>
+    <UserControl.DataContext>
+        <vm:TencentProviderViewModel />
+    </UserControl.DataContext>
+    <StackPanel Orientation="Vertical" Spacing="10" Margin="10">
+        <StackPanel Orientation="Horizontal">
+            <Label Content="腾讯云" FontSize="18" />
+            <Button Height="30" Width="180" Content="点击查看如何使用腾讯云"></Button>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Spacing="10">
+            <Label Content="Secret Id"></Label>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <TextBox PasswordChar="*" RevealPassword="{Binding IsSecretIdShow}" Width="340"
+                         HorizontalAlignment="Left" Text="{Binding SecretId}"
+                         >
+                </TextBox>
+                <Button Height="30" Width="30" Command="{Binding ShowSecretIdCommand}">
+                    <PathIcon Data="{Binding SecretIdButtonIcon}"></PathIcon>
+                </Button>
+            </StackPanel>
+            <Label Content="Secret Key"></Label>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <TextBox PasswordChar="*" RevealPassword="{Binding IsSecretKeyShow}" Width="340"
+                         HorizontalAlignment="Left" Text="{Binding SecretKey}">
+                </TextBox>
+                <Button Height="30" Width="30" Command="{Binding ShowSecretKeyCommand}">
+                    <PathIcon Data="{Binding SecretKeyButtonIcon}"></PathIcon>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Orientation="Vertical">
+            <Button Height="30" Width="80" Content="测试" HorizontalContentAlignment="Center"></Button>
+            <Label Content="待测用例 Hello"></Label>
+            <Label Content="{Binding TestResult}"></Label>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

@@ -43,7 +43,7 @@ public partial class TranslatorControlViewModel : ObservableRecipient,
     foreach (var toBeTranslatedPath in ToBeTranslatedPaths)
     {
       var translatedResult = await TranslateFile(currentTranslator, toBeTranslatedPath);
-      var fileWriter = new FileWriter();
+      var fileWriter = new SubtitleFileWriter();
       await fileWriter.WriteFile(toBeTranslatedPath, translatedResult);
       
       WeakReferenceMessenger.Default.Send(
