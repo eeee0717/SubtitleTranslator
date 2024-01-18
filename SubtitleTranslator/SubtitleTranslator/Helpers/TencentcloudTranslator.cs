@@ -42,8 +42,8 @@ public class TencentcloudTranslator : ITranslator
     var req = new TextTranslateRequest
     {
       SourceText = text,
-      Source = "en",
-      Target = "zh",
+      Source = sourceLanguage,
+      Target = targetLanguage,
       ProjectId = 1
     };
     TextTranslateResponse resp = _client!.TextTranslateSync(req);

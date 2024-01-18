@@ -12,7 +12,7 @@
     <UserControl.DataContext>
         <vm:FileListViewModel IsActive="True" />
     </UserControl.DataContext>
-    <StackPanel  Width="700">
+    <StackPanel  Width="550">
         <Grid ColumnDefinitions="*,2*,*">
             <TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="状态"></TextBlock>
             <TextBlock Grid.Column="1" HorizontalAlignment="Left" Text="文件名"></TextBlock>
