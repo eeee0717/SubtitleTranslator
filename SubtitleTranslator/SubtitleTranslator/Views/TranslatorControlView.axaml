@@ -16,21 +16,21 @@
         <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="翻译源"></TextBlock>
         <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Text="当前语言"></TextBlock>
         <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Text="目标语言"></TextBlock>
-        <ComboBox Grid.Row="1" Grid.Column="0"
+        <ComboBox Grid.Row="1" Grid.Column="0" Width="100"
                   VerticalAlignment="Center" HorizontalAlignment="Center"
-                  SelectedIndex="0"
                   SelectedItem="{Binding SelectedTranslationSource}"
                   ItemsSource="{Binding TranslationSourceList}">
         </ComboBox>
-        <ComboBox Grid.Row="1" Grid.Column="1" 
-                  SelectedIndex="0"
-                  VerticalAlignment="Center" HorizontalAlignment="Center">
-            <ComboBoxItem Content="英文"/>
+        <ComboBox Grid.Row="1" Grid.Column="1"  Width="100"
+                  VerticalAlignment="Center" HorizontalAlignment="Center"
+                  SelectedItem="{Binding SelectedSourceLanguage}"
+                  ItemsSource="{Binding SourceLanguageList}">
+            
         </ComboBox>
-        <ComboBox Grid.Row="1" Grid.Column="2" 
-                  SelectedIndex="0"
-                  VerticalAlignment="Center" HorizontalAlignment="Center">
-            <ComboBoxItem Content="中文"/>
+        <ComboBox Grid.Row="1" Grid.Column="2" Width="100"
+                  VerticalAlignment="Center" HorizontalAlignment="Center"
+                  SelectedItem="{Binding SelectedTargetLanguage}"
+                  ItemsSource="{Binding TargetLanguageList}">
         </ComboBox>
         <Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="3" Height="50" Width="150" Content="开始翻译"
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"

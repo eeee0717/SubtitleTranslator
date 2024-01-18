@@ -18,10 +18,12 @@ public class TencentcloudTranslator : ITranslator
 
   private void Initialize()
   {
+    ConfigFileHelper configFileHelper = new();
+
     _credential = new Credential
     {
-      SecretId = "AKIDMdmJo9JMI4e7VuSvLbdR0LRJRL1UjkX6",
-      SecretKey = "mU2Riv6Sg1PfirtkbHxTnu7aKCB4rUu7"
+      SecretId = configFileHelper.ProviderOptions.TencentProviderOptions.SecretId,
+      SecretKey = configFileHelper.ProviderOptions.TencentProviderOptions.SecretKey
     };
     _httpProfile = new HttpProfile
     {
@@ -40,8 +42,8 @@ public class TencentcloudTranslator : ITranslator
     var req = new TextTranslateRequest
     {
       SourceText = text,
-      Source = "en",
-      Target = "zh",
+      Source = sourceLanguage,
+      Target = targetLanguage,
       ProjectId = 1
     };
     TextTranslateResponse resp = _client!.TextTranslateSync(req);
