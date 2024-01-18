@@ -1,9 +1,13 @@
 using System;
+using System.IO;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Newtonsoft.Json;
 using SubtitleTranslator.Helpers;
 
 namespace SubtitleTranslator.ViewModels;
@@ -12,8 +16,7 @@ public partial class TencentProviderViewModel : ViewModelBase
 {
   [ObservableProperty] private bool _isSecretIdShow;
   [ObservableProperty] private StreamGeometry _secretIdButtonIcon;
-  [ObservableProperty] 
-  private string _secretId = "";
+  [ObservableProperty] private string _secretId = "";
   [ObservableProperty] private bool _isSecretKeyShow;
   [ObservableProperty] private StreamGeometry _secretKeyButtonIcon;
   [ObservableProperty] private string _secretKey = "";
@@ -28,13 +31,9 @@ public partial class TencentProviderViewModel : ViewModelBase
     var streamGeometry = res as StreamGeometry ?? StreamGeometry.Parse(StreamGeometryNotFound);
     SecretIdButtonIcon = streamGeometry;
     SecretKeyButtonIcon = streamGeometry;
-    
-  }
-
-  partial void OnSecretIdChanged(string value)
-  {
-    var configFileWriter = new ConfigFileWriter();
-    configFileWriter.WriteFile(value);
+    ConfigFileHelper configFileHelper = new();
+    SecretId = configFileHelper.ProviderOptions!.TencentProviderOptions.SecretId;
+    SecretKey = configFileHelper.ProviderOptions.TencentProviderOptions.SecretKey;
   }
   
 
@@ -68,5 +67,12 @@ public partial class TencentProviderViewModel : ViewModelBase
       Application.Current!.TryFindResource("EyeHideRegular", out var res);
       SecretKeyButtonIcon = res as StreamGeometry ?? StreamGeometry.Parse(StreamGeometryNotFound);
     }
+  }
+
+  [RelayCommand]
+  private async Task Test()
+  {
+    TencentcloudTranslator tencentcloudTranslator = new();
+    TestResult = await tencentcloudTranslator.Translate("hello", "en", "zh");
   }
 }

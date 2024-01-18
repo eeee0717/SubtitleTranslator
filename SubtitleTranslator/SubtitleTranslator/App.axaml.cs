@@ -1,11 +1,15 @@
 using System;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using CommunityToolkit.Extensions.DependencyInjection;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using SubtitleTranslator.Models;
 using SubtitleTranslator.ViewModels;
 using SubtitleTranslator.Views;
 
@@ -38,7 +42,6 @@ public partial class App : Application
         DataContext = vm
       };
     }
-
     base.OnFrameworkInitializationCompleted();
   }
 

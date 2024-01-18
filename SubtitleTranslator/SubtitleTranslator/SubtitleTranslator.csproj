@@ -20,8 +20,17 @@
         <PackageReference Include="CommunityToolkit.Labs.Extensions.DependencyInjection" Version="0.1.240109-build.1615" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
         <PackageReference Include="MessageBox.Avalonia" Version="3.1.5.1" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
         <PackageReference Include="TencentCloudSDK" Version="3.0.936" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="appsettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 </Project>

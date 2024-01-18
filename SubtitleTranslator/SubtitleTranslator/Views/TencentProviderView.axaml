@@ -23,7 +23,7 @@
             <StackPanel Orientation="Horizontal" Spacing="10">
                 <TextBox PasswordChar="*" RevealPassword="{Binding IsSecretIdShow}" Width="340"
                          HorizontalAlignment="Left" Text="{Binding SecretId}"
-                         >
+                         LostFocus="SecretIdTextBox_OnLostFocus">
                 </TextBox>
                 <Button Height="30" Width="30" Command="{Binding ShowSecretIdCommand}">
                     <PathIcon Data="{Binding SecretIdButtonIcon}"></PathIcon>
@@ -32,7 +32,7 @@
             <Label Content="Secret Key"></Label>
             <StackPanel Orientation="Horizontal" Spacing="10">
                 <TextBox PasswordChar="*" RevealPassword="{Binding IsSecretKeyShow}" Width="340"
-                         HorizontalAlignment="Left" Text="{Binding SecretKey}">
+                         HorizontalAlignment="Left" Text="{Binding SecretKey}" LostFocus="SecretKeyTextBox_OnLostFocus">
                 </TextBox>
                 <Button Height="30" Width="30" Command="{Binding ShowSecretKeyCommand}">
                     <PathIcon Data="{Binding SecretKeyButtonIcon}"></PathIcon>
@@ -40,7 +40,7 @@
             </StackPanel>
         </StackPanel>
         <StackPanel Orientation="Vertical">
-            <Button Height="30" Width="80" Content="测试" HorizontalContentAlignment="Center"></Button>
+            <Button Height="30" Width="80" Content="测试" HorizontalContentAlignment="Center" Command="{Binding TestCommand}"></Button>
             <Label Content="待测用例 Hello"></Label>
             <Label Content="{Binding TestResult}"></Label>
         </StackPanel>
