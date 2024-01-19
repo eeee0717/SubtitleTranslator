@@ -49,6 +49,7 @@ public partial class App : Application
   [Singleton(typeof(SubtitleFilePageViewModel))]
   [Singleton(typeof(SettingPageViewModel))]
   [Singleton(typeof(TencentProviderViewModel))]
+  [Singleton(typeof(YoudaoProviderViewModel))]
   [Singleton(typeof(BaseProviderViewModel))]
   internal static partial void ConfigureViewModels(IServiceCollection services);
 
@@ -56,6 +57,7 @@ public partial class App : Application
   [Singleton(typeof(SubtitleFilePageView))]
   [Singleton(typeof(SettingPageView))]
   [Singleton(typeof(TencentProviderView))]
+  [Singleton(typeof(YoudaoProviderView))]
   [Singleton(typeof(BaseProviderView))]
   internal static partial void ConfigureViews(IServiceCollection services);
 }

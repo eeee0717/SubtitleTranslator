@@ -27,6 +27,7 @@ public partial class SettingPageViewModel: ViewModelBase
   {
     new ProviderListTemplate(typeof(BaseProviderViewModel), "翻译服务商"),
     new ProviderListTemplate(typeof(TencentProviderViewModel), "腾讯云"),
+    new ProviderListTemplate(typeof(YoudaoProviderViewModel), "有道智云"),
   };
   
   

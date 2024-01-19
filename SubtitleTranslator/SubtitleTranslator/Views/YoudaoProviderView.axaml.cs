@@ -4,29 +4,28 @@ using SubtitleTranslator.Helpers;
 
 namespace SubtitleTranslator.Views;
 
-public partial class TencentProviderView : UserControl
+public partial class YoudaoProviderView : UserControl
 {
-  public TencentProviderView()
+  public YoudaoProviderView()
   {
     InitializeComponent();
   }
 
-
   private async void SecretIdTextBox_OnLostFocus(object? sender, RoutedEventArgs e)
   {
     TextBox textBox = (TextBox)sender!;
-    if(textBox.Text!.Length == 0) return;
+    if (textBox.Text!.Length == 0) return;
     ConfigFileHelper configFileHelper = new();
-    configFileHelper.ProviderOptions!.TencentProviderOptions.SecretId = textBox.Text;
+    configFileHelper.ProviderOptions!.YoudaoProviderOptions.AppId = textBox.Text;
     await configFileHelper.Save();
   }
 
   private async void SecretKeyTextBox_OnLostFocus(object? sender, RoutedEventArgs e)
   {
     TextBox textBox = (TextBox)sender!;
-    if(textBox.Text!.Length == 0) return;
+    if (textBox.Text!.Length == 0) return;
     ConfigFileHelper configFileHelper = new();
-    configFileHelper.ProviderOptions!.TencentProviderOptions.SecretKey = textBox.Text;
+    configFileHelper.ProviderOptions!.YoudaoProviderOptions.AppKey = textBox.Text;
     await configFileHelper.Save();
   }
 }

@@ -5,38 +5,39 @@
              xmlns:vm="clr-namespace:SubtitleTranslator.ViewModels"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="400"
              Width="400" Height="400"
-             x:Class="SubtitleTranslator.Views.TencentProviderView"
-             x:DataType="vm:TencentProviderViewModel">
+             x:Class="SubtitleTranslator.Views.YoudaoProviderView"
+             x:DataType="vm:YoudaoProviderViewModel">
     <Design.DataContext>
-        <vm:TencentProviderViewModel />
+        <vm:YoudaoProviderViewModel />
     </Design.DataContext>
     <UserControl.DataContext>
-        <vm:TencentProviderViewModel />
+        <vm:YoudaoProviderViewModel />
     </UserControl.DataContext>
+    
     <StackPanel Orientation="Vertical" Spacing="10" Margin="10">
         <StackPanel Orientation="Horizontal">
-            <Label Content="腾讯云" FontSize="18" />
-            <Button Height="30" Width="200" Content="点击查看如何使用腾讯云" HorizontalContentAlignment="Center"></Button>
+            <Label Content="有道智云" FontSize="18" />
+            <Button Height="30" Width="200" Content="点击查看如何使用有道智云" HorizontalContentAlignment="Center"></Button>
         </StackPanel>
         <StackPanel Orientation="Vertical" Spacing="10">
-            <Label Content="Secret Id"></Label>
+            <Label Content="App Id"></Label>
             <StackPanel Orientation="Horizontal" Spacing="10">
-                <TextBox PasswordChar="*" RevealPassword="{Binding IsSecretIdShow}" Width="340"
-                         HorizontalAlignment="Left" Text="{Binding SecretId}"
+                <TextBox PasswordChar="*" RevealPassword="{Binding IsAppIdShow}" Width="340"
+                         HorizontalAlignment="Left" Text="{Binding AppId}"
                          LostFocus="SecretIdTextBox_OnLostFocus">
                 </TextBox>
-                <Button Height="30" Width="30" Command="{Binding ShowSecretIdCommand}">
-                    <PathIcon Data="{Binding SecretIdButtonIcon}"></PathIcon>
+                <Button Height="30" Width="30" Command="{Binding ShowAppIdCommand}">
+                    <PathIcon Data="{Binding AppIdButtonIcon}"></PathIcon>
                 </Button>
             </StackPanel>
-            <Label Content="Secret Key"></Label>
+            <Label Content="App Key"></Label>
             <StackPanel Orientation="Horizontal" Spacing="10">
-                <TextBox PasswordChar="*" RevealPassword="{Binding IsSecretKeyShow}" Width="340"
-                         HorizontalAlignment="Left" Text="{Binding SecretKey}" 
+                <TextBox PasswordChar="*" RevealPassword="{Binding IsAppKeyShow}" Width="340"
+                         HorizontalAlignment="Left" Text="{Binding AppKey}" 
                          LostFocus="SecretKeyTextBox_OnLostFocus">
                 </TextBox>
-                <Button Height="30" Width="30" Command="{Binding ShowSecretKeyCommand}">
-                    <PathIcon Data="{Binding SecretKeyButtonIcon}"></PathIcon>
+                <Button Height="30" Width="30" Command="{Binding ShowAppKeyCommand}">
+                    <PathIcon Data="{Binding AppKeyButtonIcon}"></PathIcon>
                 </Button>
             </StackPanel>
         </StackPanel>
