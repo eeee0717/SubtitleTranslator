@@ -16,6 +16,10 @@ public class TencentcloudTranslator : ITranslator
   private HttpProfile? _httpProfile;
   private TmtClient? _client;
 
+  public TencentcloudTranslator()
+  {
+    Initialize();
+  }
   private void Initialize()
   {
     ConfigFileHelper configFileHelper = new();
@@ -38,7 +42,6 @@ public class TencentcloudTranslator : ITranslator
 
   public Task<string> Translate(string text, string sourceLanguage, string targetLanguage)
   {
-    Initialize();
     var req = new TextTranslateRequest
     {
       SourceText = text,

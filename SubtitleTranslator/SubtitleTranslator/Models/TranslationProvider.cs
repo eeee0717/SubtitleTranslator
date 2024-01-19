@@ -12,6 +12,7 @@ public class TranslationProvider
     TranslatorMap = new Dictionary<string, ITranslator>
     {
       { "腾讯云", new TencentcloudTranslator() },
+      { "有道智云", new YoudaoTranslator() }
     };
   }
 }
