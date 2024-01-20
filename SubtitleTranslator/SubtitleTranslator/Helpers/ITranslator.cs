@@ -4,5 +4,5 @@ namespace SubtitleTranslator.Helpers;
 
 public interface ITranslator
 {
-  Task<string> Translate(string text, string sourceLanguage, string targetLanguage);
+  Task<string?> Translate(string text, string sourceLanguage, string targetLanguage);
 }

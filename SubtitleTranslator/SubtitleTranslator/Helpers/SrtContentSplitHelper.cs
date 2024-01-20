@@ -46,7 +46,7 @@ public class SrtContentSplitHelper : IContentSplitHelper
   }
   
 
-  public string CombineContent(List<string> originalContentList, string translatedContents)
+  public string? CombineContent(List<string> originalContentList, string? translatedContents)
   {
     var translatedSplitStrings = translatedContents.Split("\n");
     for (int i = 0; i < originalContentList.Count; i++)

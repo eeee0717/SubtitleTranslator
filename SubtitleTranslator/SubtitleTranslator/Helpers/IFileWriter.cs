@@ -4,5 +4,5 @@ namespace SubtitleTranslator.Helpers;
 
 public interface IFileWriter
 {
-  Task WriteFile(string path, string content, string targetLanguage);
+  Task WriteFile(string path, string? content, string targetLanguage);
 }

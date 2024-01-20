@@ -40,7 +40,7 @@ public class TencentcloudTranslator : ITranslator
     _client = new TmtClient(_credential, "ap-beijing", _clientProfile);
   }
 
-  public Task<string> Translate(string text, string sourceLanguage, string targetLanguage)
+  public Task<string?> Translate(string text, string sourceLanguage, string targetLanguage)
   {
     var req = new TextTranslateRequest
     {

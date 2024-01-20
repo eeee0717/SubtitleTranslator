@@ -6,7 +6,7 @@ namespace SubtitleTranslator.Helpers;
 
 public class SubtitleFileWriter: IFileWriter
 {
-  public async Task WriteFile(string path, string content, string targetLanguage)
+  public async Task WriteFile(string path, string? content, string targetLanguage)
   {
     string toBeWriteFileName = Path.GetFileNameWithoutExtension(path) + $"_{targetLanguage}.srt";
     string toBeWriteFilePath = Path.Combine(Path.GetDirectoryName(path)!, toBeWriteFileName);
