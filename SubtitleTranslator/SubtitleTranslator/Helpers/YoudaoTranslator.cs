@@ -58,6 +58,11 @@ public class YoudaoTranslator : ITranslator
     return youdaoResponse.Translation;
   }
 
+  public bool CheckApi()
+  {
+    throw new NotImplementedException();
+  }
+
   private static string ComputeHash(string input, HashAlgorithm algorithm)
   {
     Byte[] inputBytes = Encoding.UTF8.GetBytes(input);

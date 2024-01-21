@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
+using SubtitleTranslator.Exceptions;
 using SubtitleTranslator.Helpers;
 using SubtitleTranslator.Models;
 
@@ -34,25 +35,33 @@ public partial class TranslatorControlViewModel : ObservableRecipient,
   private List<string> ToBeTranslatedPaths { get; set; } = new();
 
 
-  [RelayCommand]
+  [RelayCommand(CanExecute = nameof(CanTranslateClicked))]
   private async Task TranslateClicked()
   {
-    ITranslator currentTranslator = this._translatorMap![SelectedTranslationSource];
-    foreach (var toBeTranslatedPath in ToBeTranslatedPaths)
+    try
     {
-      var translatedResult = await TranslateFile(currentTranslator, toBeTranslatedPath);
-      var fileWriter = new SubtitleFileWriter();
-      await fileWriter.WriteFile(toBeTranslatedPath, translatedResult, TranslationLanguage.TargetLanguageList[SelectedTargetLanguage]);
+      ITranslator currentTranslator = this._translatorMap![SelectedTranslationSource];
+      foreach (var toBeTranslatedPath in ToBeTranslatedPaths)
+      {
+        var translatedResult = await TranslateFile(currentTranslator, toBeTranslatedPath);
+        var fileWriter = new SubtitleFileWriter();
+        await fileWriter.WriteFile(toBeTranslatedPath, translatedResult,
+          TranslationLanguage.TargetLanguageList[SelectedTargetLanguage]);
 
-      WeakReferenceMessenger.Default.Send(
-        new ValueChangedMessage<string>(toBeTranslatedPath)
-      );
+        WeakReferenceMessenger.Default.Send(
+          new ValueChangedMessage<string>(toBeTranslatedPath)
+        );
+      }
+      var completedMessageBox = MessageBoxManager
+        .GetMessageBoxStandard("翻译结果", "翻译完成", ButtonEnum.Ok, Icon.Info);
+      await completedMessageBox.ShowAsync();
     }
-
-    var completedMessageBox = MessageBoxManager
-      .GetMessageBoxStandard("翻译结果", "翻译完成", ButtonEnum.Ok, Icon.Info);
-    await completedMessageBox.ShowAsync();
+    catch (ApiNotFoundException e)
+    {
+      await MessageBoxManager.GetMessageBoxStandard("错误", e.Message, ButtonEnum.Ok, Icon.Error).ShowAsync();
+    }
   }
+  private bool CanTranslateClicked() => ToBeTranslatedPaths.Count > 0;
 
   private async Task<string?> TranslateFile(ITranslator currentTranslator, string toBeTranslatedPath)
   {

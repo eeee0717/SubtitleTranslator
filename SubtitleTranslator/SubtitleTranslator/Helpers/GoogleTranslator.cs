@@ -42,4 +42,9 @@ public class GoogleTranslator : ITranslator
     };
     return googleResponse.Translation;
   }
+
+  public bool CheckApi()
+  {
+    throw new NotImplementedException();
+  }
 }
