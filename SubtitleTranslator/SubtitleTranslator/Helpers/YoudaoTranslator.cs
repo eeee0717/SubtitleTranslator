@@ -62,8 +62,8 @@ public class YoudaoTranslator : ITranslator
 
   public bool CheckApi()
   {
-    if (_configFileHelper.ProviderOptions!.TencentProviderOptions.SecretId != "" &&
-        _configFileHelper.ProviderOptions!.TencentProviderOptions.SecretKey != "") return true;
+    if (_configFileHelper.ProviderOptions!.YoudaoProviderOptions.AppId != "" &&
+        _configFileHelper.ProviderOptions!.YoudaoProviderOptions.AppKey != "") return true;
     throw new ApiNotFoundException("有道云API未配置");
   }
 

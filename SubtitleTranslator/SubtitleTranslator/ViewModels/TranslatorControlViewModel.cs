@@ -35,9 +35,11 @@ public partial class TranslatorControlViewModel : ObservableRecipient,
   private List<string> ToBeTranslatedPaths { get; set; } = new();
 
 
-  [RelayCommand(CanExecute = nameof(CanTranslateClicked))]
+  [RelayCommand]
   private async Task TranslateClicked()
   {
+    if(ToBeTranslatedPaths.Count == 0)
+      return;
     try
     {
       ITranslator currentTranslator = this._translatorMap![SelectedTranslationSource];
@@ -61,7 +63,7 @@ public partial class TranslatorControlViewModel : ObservableRecipient,
       await MessageBoxManager.GetMessageBoxStandard("错误", e.Message, ButtonEnum.Ok, Icon.Error).ShowAsync();
     }
   }
-  private bool CanTranslateClicked() => ToBeTranslatedPaths.Count > 0;
+
 
   private async Task<string?> TranslateFile(ITranslator currentTranslator, string toBeTranslatedPath)
   {
