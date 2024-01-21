@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
@@ -9,7 +10,9 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using SubtitleTranslator.Models;
+using SubtitleTranslator.Providers;
 using SubtitleTranslator.ViewModels;
 using SubtitleTranslator.Views;
 
@@ -19,6 +22,7 @@ public partial class App : Application
 {
   public override void Initialize()
   {
+    CreateAppSetting();
     AvaloniaXamlLoader.Load(this);
   }
 
@@ -42,7 +46,29 @@ public partial class App : Application
         DataContext = vm
       };
     }
+
     base.OnFrameworkInitializationCompleted();
+  }
+
+  private async Task CreateAppSetting()
+  {
+    var configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
+    if (File.Exists(configPath)) return;
+    ProviderOptions providerOptions = new()
+    {
+      TencentProviderOptions = new()
+      {
+        SecretId = "",
+        SecretKey = ""
+      },
+      YoudaoProviderOptions = new()
+      {
+        AppId = "",
+        AppKey = ""
+      }
+    };
+    string providerOptionsJson = JsonConvert.SerializeObject(providerOptions, Formatting.Indented);
+    await File.WriteAllTextAsync(configPath, providerOptionsJson);
   }
 
   [Singleton(typeof(MainViewModel))]
