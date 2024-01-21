@@ -40,7 +40,7 @@ public class YoudaoTranslator : ITranslator
     };
   }
 
-  public async Task<string> Translate(string text, string sourceLanguage, string targetLanguage)
+  public async Task<string?> Translate(string text, string sourceLanguage, string targetLanguage)
   {
     if (sourceLanguage == "zh") sourceLanguage = "zh-CHS";
     if (sourceLanguage == "zh-TW") sourceLanguage = "zh-CHT";

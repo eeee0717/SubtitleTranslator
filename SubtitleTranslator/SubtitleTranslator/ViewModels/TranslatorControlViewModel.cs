@@ -54,7 +54,7 @@ public partial class TranslatorControlViewModel : ObservableRecipient,
     await completedMessageBox.ShowAsync();
   }
 
-  private async Task<string> TranslateFile(ITranslator currentTranslator, string toBeTranslatedPath)
+  private async Task<string?> TranslateFile(ITranslator currentTranslator, string toBeTranslatedPath)
   {
     var translatedContents = "";
     var srtContentSplitHelper = new SrtContentSplitHelper();
