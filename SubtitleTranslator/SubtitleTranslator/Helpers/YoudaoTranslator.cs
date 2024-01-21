@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using SubtitleTranslator.Exceptions;
 using SubtitleTranslator.Models;
 
 namespace SubtitleTranslator.Helpers;
@@ -14,14 +15,13 @@ public class YoudaoTranslator : ITranslator
 {
   private Dictionary<string, string> _postBody;
   private const string Url = "https://openapi.youdao.com/api";
+  private readonly ConfigFileHelper _configFileHelper = new();
 
 
   private void Initialize(string text)
   {
-    ConfigFileHelper configFileHelper = new();
-
-    var appId = configFileHelper.ProviderOptions.YoudaoProviderOptions.AppId;
-    var appKey = configFileHelper.ProviderOptions.YoudaoProviderOptions.AppKey;
+    var appId = _configFileHelper.ProviderOptions!.YoudaoProviderOptions.AppId;
+    var appKey = _configFileHelper.ProviderOptions!.YoudaoProviderOptions.AppKey;
     TimeSpan ts = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc));
     long millis = (long)ts.TotalMilliseconds;
 
@@ -42,6 +42,8 @@ public class YoudaoTranslator : ITranslator
 
   public async Task<string?> Translate(string text, string sourceLanguage, string targetLanguage)
   {
+    if( CheckApi() != true)
+      return null!;
     if (sourceLanguage == "zh") sourceLanguage = "zh-CHS";
     if (sourceLanguage == "zh-TW") sourceLanguage = "zh-CHT";
     if (targetLanguage == "zh") sourceLanguage = "zh-CHS";
@@ -56,6 +58,13 @@ public class YoudaoTranslator : ITranslator
     youdaoResponse.Translation = jObject["translation"][0].ToString();
     youdaoResponse.ErrorCode = jObject["errorCode"].ToString();
     return youdaoResponse.Translation;
+  }
+
+  public bool CheckApi()
+  {
+    if (_configFileHelper.ProviderOptions!.YoudaoProviderOptions.AppId != "" &&
+        _configFileHelper.ProviderOptions!.YoudaoProviderOptions.AppKey != "") return true;
+    throw new ApiNotFoundException("有道云API未配置");
   }
 
   private static string ComputeHash(string input, HashAlgorithm algorithm)

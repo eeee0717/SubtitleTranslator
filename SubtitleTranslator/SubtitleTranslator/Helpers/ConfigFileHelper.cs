@@ -13,10 +13,6 @@ public class ConfigFileHelper
   public ConfigFileHelper()
   {
     _configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
-    if (!File.Exists(_configPath))
-    {
-      File.Create(_configPath);
-    }
 
     using StreamReader streamReader = new StreamReader(_configPath);
     var json = streamReader.ReadToEnd();
