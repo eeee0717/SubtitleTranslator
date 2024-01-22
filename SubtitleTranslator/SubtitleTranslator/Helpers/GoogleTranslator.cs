@@ -47,4 +47,9 @@ public class GoogleTranslator : ITranslator
   {
     throw new NotImplementedException();
   }
+
+  public bool CheckContent(string text)
+  {
+    throw new NotImplementedException();
+  }
 }
