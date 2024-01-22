@@ -37,7 +37,7 @@ public partial class TranslatorControlViewModel : ObservableRecipient,
   [RelayCommand]
   private async Task TranslateClicked()
   {
-    if(ToBeTranslatedPaths.Count == 0)
+    if (ToBeTranslatedPaths.Count == 0)
       return;
     try
     {
@@ -53,6 +53,7 @@ public partial class TranslatorControlViewModel : ObservableRecipient,
           new ValueChangedMessage<string>(toBeTranslatedPath)
         );
       }
+
       var completedMessageBox = MessageBoxManager
         .GetMessageBoxStandard("翻译结果", "翻译完成", ButtonEnum.Ok, Icon.Info);
       await completedMessageBox.ShowAsync();
@@ -68,7 +69,7 @@ public partial class TranslatorControlViewModel : ObservableRecipient,
   {
     var translatedContents = "";
     var srtContentSplitHelper = new SrtContentSplitHelper();
-    var (originalContentList, toBeTranslatedList) =
+    var (originalContentList, toBeTranslatedContentIndexList, toBeTranslatedList) =
       await srtContentSplitHelper.SplitContent(toBeTranslatedPath);
     foreach (var toBeTranslatedContent in toBeTranslatedList)
     {
@@ -83,7 +84,10 @@ public partial class TranslatorControlViewModel : ObservableRecipient,
       translatedContents += translatedContent;
     }
 
-    return srtContentSplitHelper.CombineContent(originalContentList, translatedContents);
+    return srtContentSplitHelper.CombineContent(originalContentList, toBeTranslatedContentIndexList,
+      translatedContents);
+    ;
+    // return srtContentSplitHelper.CombineContent(originalContentList, translatedContents);
   }
 
 
