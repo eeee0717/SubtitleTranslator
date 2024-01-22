@@ -8,7 +8,6 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
-using SubtitleTranslator.Exceptions;
 using SubtitleTranslator.Helpers;
 using SubtitleTranslator.Models;
 
@@ -38,14 +37,14 @@ public partial class TranslatorControlViewModel : ObservableRecipient,
   [RelayCommand]
   private async Task TranslateClicked()
   {
-    if(ToBeTranslatedPaths.Count == 0)
+    if (ToBeTranslatedPaths.Count == 0)
       return;
     try
     {
       ITranslator currentTranslator = this._translatorMap![SelectedTranslationSource];
       foreach (var toBeTranslatedPath in ToBeTranslatedPaths)
       {
-        var translatedResult = await TranslateFile(currentTranslator, toBeTranslatedPath);
+        var translatedResult = await TranslateFileAsync(currentTranslator, toBeTranslatedPath);
         var fileWriter = new SubtitleFileWriter();
         await fileWriter.WriteFile(toBeTranslatedPath, translatedResult,
           TranslationLanguage.TargetLanguageList[SelectedTargetLanguage]);
@@ -54,22 +53,23 @@ public partial class TranslatorControlViewModel : ObservableRecipient,
           new ValueChangedMessage<string>(toBeTranslatedPath)
         );
       }
+
       var completedMessageBox = MessageBoxManager
         .GetMessageBoxStandard("翻译结果", "翻译完成", ButtonEnum.Ok, Icon.Info);
       await completedMessageBox.ShowAsync();
     }
-    catch (ApiNotFoundException e)
+    catch (Exception e)
     {
       await MessageBoxManager.GetMessageBoxStandard("错误", e.Message, ButtonEnum.Ok, Icon.Error).ShowAsync();
     }
   }
 
 
-  private async Task<string?> TranslateFile(ITranslator currentTranslator, string toBeTranslatedPath)
+  private async Task<string?> TranslateFileAsync(ITranslator currentTranslator, string toBeTranslatedPath)
   {
     var translatedContents = "";
     var srtContentSplitHelper = new SrtContentSplitHelper();
-    var (originalContentList, toBeTranslatedList) =
+    var (originalContentList, toBeTranslatedContentIndexList, toBeTranslatedList) =
       await srtContentSplitHelper.SplitContent(toBeTranslatedPath);
     foreach (var toBeTranslatedContent in toBeTranslatedList)
     {
@@ -80,11 +80,14 @@ public partial class TranslatorControlViewModel : ObservableRecipient,
           TranslationLanguage.TargetLanguageList[SelectedTargetLanguage]);
       apiCount++;
       if (apiCount == 4)
-        await Task.Delay(1000);
+        await Task.Delay(1010);
       translatedContents += translatedContent;
     }
 
-    return srtContentSplitHelper.CombineContent(originalContentList, translatedContents);
+    return srtContentSplitHelper.CombineContent(originalContentList, toBeTranslatedContentIndexList,
+      translatedContents);
+    ;
+    // return srtContentSplitHelper.CombineContent(originalContentList, translatedContents);
   }
 
 

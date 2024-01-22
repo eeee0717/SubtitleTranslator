@@ -1,8 +1,8 @@
+using System;
 using System.Threading.Tasks;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 using Newtonsoft.Json;
-using SubtitleTranslator.Exceptions;
 using SubtitleTranslator.Models;
 using TencentCloud.Common;
 using TencentCloud.Common.Profile;
@@ -43,9 +43,9 @@ public class TencentcloudTranslator : ITranslator
     _client = new TmtClient(_credential, "ap-beijing", _clientProfile);
   }
 
-  public Task<string?> Translate(string text, string sourceLanguage, string targetLanguage)
+  public async Task<string?> Translate(string text, string sourceLanguage, string targetLanguage)
   {
-    if( CheckApi() != true)
+    if( CheckApi() != true|| CheckContent(text) != true)
       return null!;
     var req = new TextTranslateRequest
     {
@@ -54,16 +54,22 @@ public class TencentcloudTranslator : ITranslator
       Target = targetLanguage,
       ProjectId = 1
     };
-    TextTranslateResponse resp = _client!.TextTranslateSync(req);
+    TextTranslateResponse resp = await _client!.TextTranslate(req);
     var jsonString = AbstractModel.ToJsonString(resp);
     TencentcloudResponse? tencentcloudResponse = JsonConvert.DeserializeObject<TencentcloudResponse>(jsonString);
-    return Task.FromResult(tencentcloudResponse!.TargetText);
+    return tencentcloudResponse!.TargetText;
   }
 
   public bool CheckApi()
   {
     if (_configFileHelper.ProviderOptions!.TencentProviderOptions.SecretId != "" &&
         _configFileHelper.ProviderOptions!.TencentProviderOptions.SecretKey != "") return true;
-    throw new ApiNotFoundException("腾讯云API未配置");
+    throw new Exception("腾讯云API未配置");
+  }
+  public bool CheckContent(string text)
+  {
+    if(text.Length !=0)
+      return true;
+    throw new Exception("字幕文件内容为空");
   }
 }

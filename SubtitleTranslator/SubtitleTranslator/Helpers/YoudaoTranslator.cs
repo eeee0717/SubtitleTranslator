@@ -6,7 +6,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using SubtitleTranslator.Exceptions;
 using SubtitleTranslator.Models;
 
 namespace SubtitleTranslator.Helpers;
@@ -42,7 +41,7 @@ public class YoudaoTranslator : ITranslator
 
   public async Task<string?> Translate(string text, string sourceLanguage, string targetLanguage)
   {
-    if( CheckApi() != true)
+    if( CheckApi() != true || CheckContent(text) != true)
       return null!;
     if (sourceLanguage == "zh") sourceLanguage = "zh-CHS";
     if (sourceLanguage == "zh-TW") sourceLanguage = "zh-CHT";
@@ -64,9 +63,14 @@ public class YoudaoTranslator : ITranslator
   {
     if (_configFileHelper.ProviderOptions!.YoudaoProviderOptions.AppId != "" &&
         _configFileHelper.ProviderOptions!.YoudaoProviderOptions.AppKey != "") return true;
-    throw new ApiNotFoundException("有道云API未配置");
+    throw new Exception("有道云API未配置");
   }
-
+  public bool CheckContent(string text)
+  {
+    if(text.Length !=0)
+      return true;
+    throw new Exception("字幕文件内容为空");
+  }
   private static string ComputeHash(string input, HashAlgorithm algorithm)
   {
     Byte[] inputBytes = Encoding.UTF8.GetBytes(input);

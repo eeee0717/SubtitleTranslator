@@ -18,12 +18,13 @@ public class SrtContentSplitHelper : IContentSplitHelper
     this._timelinePattern = new Regex(@"^\d{2}:\d{2}:\d{2},\d{3} --> \d{2}:\d{2}:\d{2},\d{3}$");
   }
 
-  public async Task<Tuple<List<string>, List<string>>> SplitContent(string filePath)
+  public async Task<Tuple<List<string>, List<int>, List<string>>> SplitContent(string filePath)
   {
     var originalContentList = new List<string>();
     var toBeTranslatedList = new List<string>();
+    var toBeTranslatedContentIndexList = new List<int>();
     var toBeTranslatedContent = "";
-    
+
     using var streamReader = new StreamReader(filePath, Encoding.UTF8);
     while (await streamReader.ReadLineAsync() is { } line)
     {
@@ -32,30 +33,31 @@ public class SrtContentSplitHelper : IContentSplitHelper
         originalContentList.Add(line);
         continue;
       }
+
       originalContentList.Add("");
+      toBeTranslatedContentIndexList.Add(originalContentList.Count - 1);
+      toBeTranslatedContent += $"{line}\n";
       if (toBeTranslatedContent.Length > 5000)
       {
         toBeTranslatedList.Add(toBeTranslatedContent);
         toBeTranslatedContent = "";
       }
-      toBeTranslatedContent += $"{line}\n";
     }
+
     toBeTranslatedList.Add(toBeTranslatedContent);
 
-    return new Tuple<List<string>, List<string>>(originalContentList, toBeTranslatedList);
+    return new Tuple<List<string>, List<int>, List<string>>(originalContentList, toBeTranslatedContentIndexList,
+      toBeTranslatedList);
   }
-  
 
-  public string? CombineContent(List<string> originalContentList, string? translatedContents)
+
+  public string CombineContent(List<string> originalContentList, List<int> toBeTranslatedContentIndexList,
+    string? translatedContents)
   {
     var translatedSplitStrings = translatedContents.Split("\n");
-    for (int i = 0; i < originalContentList.Count; i++)
+    for (int i = 0; i < translatedSplitStrings.Length-1; i++)
     {
-      // i=2,6,10...时处理
-      if ((i - 2) % 4 == 0)
-      {
-        originalContentList[i] = translatedSplitStrings[(i - 2) / 4];
-      }
+      originalContentList[toBeTranslatedContentIndexList[i]] = translatedSplitStrings[i];
     }
 
     return string.Join("\r\n", originalContentList);
