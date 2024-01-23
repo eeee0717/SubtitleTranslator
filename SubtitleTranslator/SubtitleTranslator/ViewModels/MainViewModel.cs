@@ -39,7 +39,7 @@ public partial class MainViewModel : ViewModelBase
   [RelayCommand]
   private void Setting()
   {
-    var settingPage = Ioc.Default.GetService<SettingPageView>()!;
+    var settingPage = new SettingPageView();
     settingPage.Show();
     settingPage.Activate();
   }

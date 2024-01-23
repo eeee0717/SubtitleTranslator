@@ -14,6 +14,8 @@ public class GoogleTranslator : ITranslator
 {
   public async Task<string?> Translate(string text, string sourceLanguage, string targetLanguage)
   {
+    if (CheckContent(text) != true)
+      return null!;
     if (targetLanguage == "auto")
     {
       await MessageBoxManager.GetMessageBoxStandard("错误", "请选择目标语言", ButtonEnum.Ok, Icon.Error).ShowAsync();
@@ -50,6 +52,8 @@ public class GoogleTranslator : ITranslator
 
   public bool CheckContent(string text)
   {
-    throw new NotImplementedException();
+    if (text.Length != 0)
+      return true;
+    throw new Exception("字幕文件内容为空");
   }
 }

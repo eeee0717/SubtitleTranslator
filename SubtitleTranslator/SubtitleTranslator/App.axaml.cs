@@ -73,7 +73,7 @@ public partial class App : Application
 
   [Singleton(typeof(MainViewModel))]
   [Singleton(typeof(SubtitleFilePageViewModel))]
-  [Singleton(typeof(SettingPageViewModel))]
+  [Transient(typeof(SettingPageViewModel))]
   [Singleton(typeof(TencentProviderViewModel))]
   [Singleton(typeof(YoudaoProviderViewModel))]
   [Singleton(typeof(BaseProviderViewModel))]
@@ -81,7 +81,7 @@ public partial class App : Application
 
   [Singleton(typeof(MainView))]
   [Singleton(typeof(SubtitleFilePageView))]
-  [Singleton(typeof(SettingPageView))]
+  [Transient(typeof(SettingPageView))]
   [Singleton(typeof(TencentProviderView))]
   [Singleton(typeof(YoudaoProviderView))]
   [Singleton(typeof(BaseProviderView))]

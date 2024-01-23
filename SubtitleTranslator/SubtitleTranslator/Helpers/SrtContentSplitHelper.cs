@@ -62,4 +62,5 @@ public class SrtContentSplitHelper : IContentSplitHelper
 
     return string.Join("\r\n", originalContentList);
   }
+  
 }
