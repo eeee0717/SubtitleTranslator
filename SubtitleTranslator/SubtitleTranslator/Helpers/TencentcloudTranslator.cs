@@ -1,7 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using MsBox.Avalonia;
-using MsBox.Avalonia.Enums;
 using Newtonsoft.Json;
 using SubtitleTranslator.Models;
 using TencentCloud.Common;

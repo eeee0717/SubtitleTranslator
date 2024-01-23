@@ -7,7 +7,7 @@
         Width="800" Height="650"
         WindowStartupLocation="CenterScreen"
         x:Class="SubtitleTranslator.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/Icon.ico"
         Title="Subtitle Translator">
     <views:MainView />
 </Window>
