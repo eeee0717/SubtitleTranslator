@@ -65,7 +65,7 @@ public partial class TranslatorControlViewModel : ObservableRecipient,
   }
 
 
-  private async Task<string?> TranslateFileAsync(ITranslator currentTranslator, string toBeTranslatedPath)
+  private async Task<string> TranslateFileAsync(ITranslator currentTranslator, string toBeTranslatedPath)
   {
     var translatedContents = "";
     var srtContentSplitHelper = new SrtContentSplitHelper();
@@ -86,8 +86,6 @@ public partial class TranslatorControlViewModel : ObservableRecipient,
 
     return srtContentSplitHelper.CombineContent(originalContentList, toBeTranslatedContentIndexList,
       translatedContents);
-    ;
-    // return srtContentSplitHelper.CombineContent(originalContentList, translatedContents);
   }
 
 

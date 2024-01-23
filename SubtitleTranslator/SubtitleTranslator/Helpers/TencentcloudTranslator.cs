@@ -8,7 +8,6 @@ using TencentCloud.Common;
 using TencentCloud.Common.Profile;
 using TencentCloud.Tmt.V20180321;
 using TencentCloud.Tmt.V20180321.Models;
-using Task = System.Threading.Tasks.Task;
 
 namespace SubtitleTranslator.Helpers;
 

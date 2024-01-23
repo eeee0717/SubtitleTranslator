@@ -54,8 +54,10 @@ public class YoudaoTranslator : ITranslator
     string resp = await Post();
     JObject jObject = JObject.Parse(resp);
     YoudaoResponse youdaoResponse = new();
-    youdaoResponse.Translation = jObject["translation"][0].ToString();
-    youdaoResponse.ErrorCode = jObject["errorCode"].ToString();
+    youdaoResponse.Translation = jObject["translation"]?[0]?.ToString();
+    youdaoResponse.ErrorCode = jObject["errorCode"]!.ToString();
+    if (youdaoResponse.ErrorCode != "0")
+      throw new Exception($"有道云API错误,错误码{youdaoResponse.ErrorCode}");
     return youdaoResponse.Translation;
   }
 
