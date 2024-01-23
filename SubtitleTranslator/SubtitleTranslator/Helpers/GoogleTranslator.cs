@@ -4,8 +4,6 @@ using System.Threading.Tasks;
 using GTranslate.Results;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using SubtitleTranslator.Models;
 
 namespace SubtitleTranslator.Helpers;
