@@ -14,7 +14,7 @@ public class TencentcloudTranslator : ITranslator
   private Credential? _credential;
   private ClientProfile? _clientProfile;
   private HttpProfile? _httpProfile;
-  private TmtClient? _client;
+  private TmtClient _client;
   private readonly ConfigFileHelper _configFileHelper = new();
 
   public TencentcloudTranslator()
@@ -51,10 +51,8 @@ public class TencentcloudTranslator : ITranslator
       Target = targetLanguage,
       ProjectId = 1
     };
-    TextTranslateResponse resp = await _client!.TextTranslate(req);
-    var jsonString = AbstractModel.ToJsonString(resp);
-    TencentcloudResponse tencentcloudResponse = JsonConvert.DeserializeObject<TencentcloudResponse>(jsonString);
-    return tencentcloudResponse!.TargetText;
+    TextTranslateResponse resp = await _client.TextTranslate(req);
+    return resp.TargetText;
   }
 
   public bool CheckApi()
