@@ -22,7 +22,7 @@ sudo xattr -rd com.apple.quarantine /Applications/SubtitleTranslator.app
 
 ## 服务商配置
 ### 腾讯云配置
-1. 登录(腾讯云)[https://cloud.tencent.com/]
+1. 登录[腾讯云](https://cloud.tencent.com/)
 2. 搜索访问管理 -> 用户 -> 用户列表 -> 新增用户
 ![CleanShot 2024-01-24 at 16 39 02@2x](https://github.com/eeee0717/SubtitleTranslator/assets/70054568/561d5437-d59d-4520-9c5a-4905c5df862d)
 3. 点击新增的用户 -> API密钥 -> 新增密钥
@@ -30,14 +30,14 @@ sudo xattr -rd com.apple.quarantine /Applications/SubtitleTranslator.app
 5. 点击测试按钮进行测试
 
 ### 有道云配置
-1. 登录(有道智云)[https://ai.youdao.com/console/#/]
+1. 登录[有道智云](https://ai.youdao.com/console/#/)
 2. 应用总览 -> 创建应用 -> 选择文本翻译服务和API接入
 3. 复制 AppId 和 AppKey粘贴到设置中
 4. 点击测试按钮进行测试
 
 
 ## 开发指南
-该项目使用Avalonia开发，(Avalonia)[https://avaloniaui.net/]是一个跨平台框架，可以让.NET开发人员更好的创建跨平台App。
+该项目使用Avalonia开发，[Avalonia](https://avaloniaui.net/)是一个跨平台框架，可以让.NET开发人员更好的创建跨平台App。
 
 由于开发中使用到了Community Toolkit Lab中的实验特性，因此需要在nuget中添加新的nuget包
 
