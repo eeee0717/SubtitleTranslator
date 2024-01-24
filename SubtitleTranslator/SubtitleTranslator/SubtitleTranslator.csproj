@@ -25,7 +25,6 @@
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
-        <PackageReference Include="TencentCloudSDK" Version="3.0.936" />
         <PackageReference Include="Dotnet.Bundle" Version="*" />
     </ItemGroup>
 
