@@ -45,8 +45,8 @@ public class YoudaoTranslator : ITranslator
       return null!;
     if (sourceLanguage == "zh") sourceLanguage = "zh-CHS";
     if (sourceLanguage == "zh-TW") sourceLanguage = "zh-CHT";
-    if (targetLanguage == "zh") sourceLanguage = "zh-CHS";
-    if (targetLanguage == "zh-TW") sourceLanguage = "zh-CHT";
+    if (targetLanguage == "zh") targetLanguage = "zh-CHS";
+    if (targetLanguage == "zh-TW") targetLanguage = "zh-CHT";
     Initialize(text);
     _postBody.Add("from", sourceLanguage);
     _postBody.Add("to", targetLanguage);

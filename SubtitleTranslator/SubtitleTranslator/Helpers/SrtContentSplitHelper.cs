@@ -55,7 +55,7 @@ public class SrtContentSplitHelper : IContentSplitHelper
     string? translatedContents)
   {
     var translatedSplitStrings = translatedContents.Split("\n");
-    for (int i = 0; i < translatedSplitStrings.Length-1; i++)
+    for (int i = 0; i < translatedSplitStrings.Length; i++)
     {
       originalContentList[toBeTranslatedContentIndexList[i]] = translatedSplitStrings[i];
     }

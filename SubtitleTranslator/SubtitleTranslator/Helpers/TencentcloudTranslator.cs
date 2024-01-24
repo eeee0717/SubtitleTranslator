@@ -53,7 +53,7 @@ public class TencentcloudTranslator : ITranslator
     };
     TextTranslateResponse resp = await _client!.TextTranslate(req);
     var jsonString = AbstractModel.ToJsonString(resp);
-    TencentcloudResponse? tencentcloudResponse = JsonConvert.DeserializeObject<TencentcloudResponse>(jsonString);
+    TencentcloudResponse tencentcloudResponse = JsonConvert.DeserializeObject<TencentcloudResponse>(jsonString);
     return tencentcloudResponse!.TargetText;
   }
 
