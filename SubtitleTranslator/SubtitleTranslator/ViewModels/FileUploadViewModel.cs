@@ -62,6 +62,6 @@ public partial class FileUploadViewModel : ObservableRecipient
 
   private static FilePickerFileType SubtitleFileAll { get; } = new("All Subtitle Files")
   {
-    Patterns = new[] { "*.srt", "*.ass" },
+    Patterns = new[] { "*.srt", "*.ass", "*.*" },
   };
 }
